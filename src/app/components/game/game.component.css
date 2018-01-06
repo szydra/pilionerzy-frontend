@@ -1,0 +1,37 @@
+.absolute-right-container {
+  bottom: 0;
+  position: static;
+  width: 100%;
+}
+
+.end-info {
+  font-size: 20px;
+}
+
+.left-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.level-box {
+  font-size: 16px;
+  padding: 8px;
+  text-align: center;
+}
+
+.level-box.bg-warning {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#level-box0 {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .absolute-right-container {
+    position: absolute;
+  }
+}
