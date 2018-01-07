@@ -73,7 +73,6 @@ export class QuestionComponent implements OnChanges {
         clearInterval(this.interval);
         this.gameUiService.updateFontSize();
         this.gameUiService.enableHover();
-        this.gameUiService.updateMathInLeftContainer();
         this.reset();
         this.gameStateChange.emit(this.game);
       });

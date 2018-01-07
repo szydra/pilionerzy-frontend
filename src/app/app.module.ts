@@ -10,7 +10,9 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 
 import { GameService } from './services/game.service';
 import { GameUiService } from './services/game-ui.service';
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
+
+import { MathJaxDirective } from './directives/mathjax.directive';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { AppRoutingModule } from './/app-routing.module';
     GameComponent,
     HomeComponent,
     NavbarComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    MathJaxDirective
   ],
   imports: [
     BrowserModule,
