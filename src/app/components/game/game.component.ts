@@ -49,9 +49,9 @@ export class GameComponent implements OnInit {
       this.game.level--;
       this.game.correct = correctAnswer;
       this.waiting = false;
+      this.gameUiService.roundLevelBoxCorners();
     });
     this.gameUiService.disableHover();
-    this.gameUiService.roundLevelBoxCorners();
   }
 
   isGuaranted(level: number): boolean {

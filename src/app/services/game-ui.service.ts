@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 declare var $: any;
-declare var MathJax: any;
 
 @Injectable()
 export class GameUiService {
@@ -25,9 +24,19 @@ export class GameUiService {
     });
   }
 
+  // This method returns the height of the highest matched element.
+  // https://stackoverflow.com/a/6061029/8701267
+  private getHeight($element): number {
+    return Math.max.apply(null, $element.map(function() {
+      return $(this).height();
+    }).get());
+  }
+
   private resizeFont($element, maxHeight): void {
-    while ($element.height() > maxHeight) {
+    let currentHeight = this.getHeight($element);
+    while (currentHeight > maxHeight) {
       $element.css('font-size', parseFloat($element.css('font-size')) - 1);
+      currentHeight = this.getHeight($element);
     }
   }
 
@@ -62,12 +71,6 @@ export class GameUiService {
       $(".answer, .question").css('font-size', 20);
       this.resizeFont($(".answer"), 80);
       this.resizeFont($(".question"), 90);
-    });
-  }
-
-  updateMathInLeftContainer(): void {
-    setTimeout(() => {
-      MathJax.Hub.Queue(["Typeset", MathJax.Hub, $("div.left-container")[0]])
     });
   }
 }
