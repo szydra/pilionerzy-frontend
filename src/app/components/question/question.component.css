@@ -119,6 +119,16 @@ span.answer, span.question {
   margin: 0 3px 5px;
 }
 
+.stupid-vertical-line {
+  position: absolute;
+  height: 100%;
+  width: 96%;
+  background: inherit;
+  z-index: -1;
+  border-radius: inherit;
+  left: 0;
+}
+
 @media (min-width: 992px) {
   .absolute-full-question-container {
     position: absolute;
