@@ -1,0 +1,136 @@
+span.answer, span.question {
+  line-height: normal;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.absolute-full-question-container {
+  bottom: 0;
+  position: static;
+  width: 100%;
+}
+
+.answer-container {
+  position: relative;
+  width: 100%;
+  height: 90px;
+  line-height: 90px;
+  margin: 5px 0;
+  padding: 0;
+  border-radius: 44px;
+  z-index: 1;
+}
+
+.answer-content {
+  position: absolute;
+  margin: auto 15px auto 80px;
+  top: 0;
+  bottom: 0;
+}
+
+.answers-container {
+  width: 100%;
+  height: 200px;
+  position: relative;
+}
+
+.bevel-important {
+  background-position: bottom left, bottom right, top right, top left !important;
+  -moz-background-size: 50% 50% !important;
+  -webkit-background-size: 50% 50% !important;
+  background-size: 50% 50% !important;
+  background-repeat: no-repeat !important;
+}
+
+.bg-correct {
+  background: #28a745;
+  background: -moz-linear-gradient(30deg, transparent 22px, #28a745 22px), -moz-linear-gradient(150deg, transparent 22px, #28a745 22px), -moz-linear-gradient(210deg, transparent 22px, #28a745 22px), -moz-linear-gradient(330deg, transparent 22px, #28a745 22px);
+  background: -o-linear-gradient(30deg, transparent 22px, #28a745 22px), -o-linear-gradient(150deg, transparent 22px, #28a745 22px), -o-linear-gradient(210deg, transparent 22px, #28a745 22px), -o-linear-gradient(330deg, transparent 22px, #28a745 22px);
+  background: -webkit-linear-gradient(30deg, transparent 22px, #28a745 22px), -webkit-linear-gradient(150deg, transparent 22px, #28a745 22px), -webkit-linear-gradient(210deg, transparent 22px, #28a745 22px), -webkit-linear-gradient(330deg, transparent 22px, #28a745 22px);
+}
+
+.bg-incorrect-unselected {
+  background: #00005b;
+  background: -moz-linear-gradient(30deg, transparent 22px, #00005b 22px), -moz-linear-gradient(150deg, transparent 22px, #00005b 22px), -moz-linear-gradient(210deg, transparent 22px, #00005b 22px), -moz-linear-gradient(330deg, transparent 22px, #00005b 22px);
+  background: -o-linear-gradient(30deg, transparent 22px, #00005b 22px), -o-linear-gradient(150deg, transparent 22px, #00005b 22px), -o-linear-gradient(210deg, transparent 22px, #00005b 22px), -o-linear-gradient(330deg, transparent 22px, #00005b 22px);
+  background: -webkit-linear-gradient(30deg, transparent 22px, #00005b 22px), -webkit-linear-gradient(150deg, transparent 22px, #00005b 22px), -webkit-linear-gradient(210deg, transparent 22px, #00005b 22px), -webkit-linear-gradient(330deg, transparent 22px, #00005b 22px);
+}
+
+.bg-incorrect-unselected:not(.disable-hover):hover {
+  background: #00006b;
+  background: -moz-linear-gradient(30deg, transparent 20px, #00006b 20px), -moz-linear-gradient(150deg, transparent 20px, #00006b 20px), -moz-linear-gradient(210deg, transparent 20px, #00006b 20px), -moz-linear-gradient(330deg, transparent 20px, #00006b 20px);
+  background: -o-linear-gradient(30deg, transparent 20px, #00006b 20px), -o-linear-gradient(150deg, transparent 20px, #00006b 20px), -o-linear-gradient(210deg, transparent 20px, #00006b 20px), -o-linear-gradient(330deg, transparent 20px, #00006b 20px);
+  background: -webkit-linear-gradient(30deg, transparent 20px, #00006b 20px), -webkit-linear-gradient(150deg, transparent 20px, #00006b 20px), -webkit-linear-gradient(210deg, transparent 20px, #00006b 20px), -webkit-linear-gradient(330deg, transparent 20px, #00006b 20px);
+  cursor: pointer;
+}
+
+.bg-incorrect-selected {
+  background: #ffc107;
+  background: -moz-linear-gradient(30deg, transparent 22px, #ffc107 22px), -moz-linear-gradient(150deg, transparent 22px, #ffc107 22px), -moz-linear-gradient(210deg, transparent 22px, #ffc107 22px), -moz-linear-gradient(330deg, transparent 22px, #ffc107 22px);
+  background: -o-linear-gradient(30deg, transparent 22px, #ffc107 22px), -o-linear-gradient(150deg, transparent 22px, #ffc107 22px), -o-linear-gradient(210deg, transparent 22px, #ffc107 22px), -o-linear-gradient(330deg, transparent 22px, #ffc107 22px);
+  background: -webkit-linear-gradient(30deg, transparent 22px, #ffc107 22px), -webkit-linear-gradient(150deg, transparent 22px, #ffc107 22px), -webkit-linear-gradient(210deg, transparent 22px, #ffc107 22px), -webkit-linear-gradient(330deg, transparent 22px, #ffc107 22px);
+}
+
+.bg-incorrect-selected:not(.disable-hover):hover {
+  background: #ffb107;
+  background: -moz-linear-gradient(30deg, transparent 20px, #ffb107 20px), -moz-linear-gradient(150deg, transparent 20px, #ffb107 20px), -moz-linear-gradient(210deg, transparent 20px, #ffb107 20px), -moz-linear-gradient(330deg, transparent 20px, #ffb107 20px);
+  background: -o-linear-gradient(30deg, transparent 20px, #ffb107 20px), -o-linear-gradient(150deg, transparent 20px, #ffb107 20px), -o-linear-gradient(210deg, transparent 20px, #ffb107 20px), -o-linear-gradient(330deg, transparent 20px, #ffb107 20px);
+  background: -webkit-linear-gradient(30deg, transparent 20px, #ffb107 20px), -webkit-linear-gradient(150deg, transparent 20px, #ffb107 20px), -webkit-linear-gradient(210deg, transparent 20px, #ffb107 20px), -webkit-linear-gradient(330deg, transparent 20px, #ffb107 20px);
+  cursor: pointer;
+}
+
+.prefix {
+  font-size: 40px;
+  font-weight: bold;
+  color: #FFEB3B;
+  position: absolute;
+  margin: auto 0 auto 10px;
+  top: 0;
+  bottom: 0;
+}
+
+.question-content {
+  position: absolute;
+  height: 100px;
+  margin: auto 55px auto 55px;
+  top: 0;
+  bottom: 0;
+}
+
+.question-content-parent {
+  background: #00005b;
+  background: -moz-linear-gradient(30deg, transparent 20px, #00005b 20px), -moz-linear-gradient(150deg, transparent 20px, #00005b 20px), -moz-linear-gradient(210deg, transparent 20px, #00005b 20px), -moz-linear-gradient(330deg, transparent 20px, #00005b 20px);
+  background: -o-linear-gradient(30deg, transparent 20px, #00005b 20px), -o-linear-gradient(150deg, transparent 20px, #00005b 20px), -o-linear-gradient(210deg, transparent 20px, #00005b 20px), -o-linear-gradient(330deg, transparent 20px, #00005b 20px);
+  background: -webkit-linear-gradient(30deg, transparent 24px, #00005b 24px), -webkit-linear-gradient(150deg, transparent 24px, #00005b 24px), -webkit-linear-gradient(210deg, transparent 24px, #00005b 24px), -webkit-linear-gradient(330deg, transparent 24px, #00005b 24px);
+  position: relative;
+  width: 96%;
+  height: 100px;
+  line-height: 100px;
+  margin: 5px 2%;
+  padding: 0;
+  border-radius: 49px;
+}
+
+.span-prefix {
+  font-size: 10px;
+  vertical-align: middle;
+  line-height: 10px;
+  display: inline-block;
+  margin: 0 3px 5px;
+}
+
+.stupid-vertical-line {
+  position: absolute;
+  height: 100%;
+  width: 96%;
+  background: inherit;
+  z-index: -1;
+  border-radius: inherit;
+  left: 0;
+}
+
+@media (min-width: 992px) {
+  .absolute-full-question-container {
+    position: absolute;
+  }
+}

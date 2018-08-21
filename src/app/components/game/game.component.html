@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-lg-9 col-md-8">
+    <div class="left-container">
+      <div *ngIf="game.end" class="row">
+        <div class="col-sm-12 text-center">
+          <div class="end-info mt-3 text-white">
+            <span *ngIf="game.level === -1">Niestety nie udało Ci się nic wygrać.</span>
+            <span *ngIf="game.level > -1">
+              Wygrałeś {{awards[game.level]}}. Gratulacje!
+            </span>
+          </div>
+          <div class="mb-2 mt-2"><button (click)="onNewGameRequest()"
+            class="btn btn-primary btn-lg">Zagraj od nowa</button></div>
+        </div>
+      </div>
+      <question [game]="game"
+        (gameStateChange)="onGameStateChange($event)">
+      </question>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-4">
+    <div class="absolute-right-container text-white">
+      <div class="level-box"
+        id="level-box{{lev}}"
+        *ngFor="let lev of levels"
+        [ngClass]="lev === game.level && !game.end ? 'bg-warning' : lev > game.level ? '' : 'bg-success'"
+        [ngStyle]="{'font-weight': isGuaranted(lev) ? 'bold' : 'normal'}">
+        {{awards[lev]}}
+      </div>
+      <div class="row">
+        <div class="col-sm-12 text-center mt-1 mb-1">
+          <button class="btn btn-primary btn-lg"
+            [disabled]="game.end"
+            (click)="onResign()">Rezygnuj</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<spinner *ngIf="waiting"></spinner>
