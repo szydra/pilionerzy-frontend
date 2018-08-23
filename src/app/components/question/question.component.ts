@@ -86,7 +86,7 @@ export class QuestionComponent implements OnChanges {
 
   ngOnChanges(changes) {
     if (!changes.game.currentValue.level) {
-      this.getQuestion();
+      this.gameService.startNewGame().then(() => this.getQuestion());
     }
   }
 }
