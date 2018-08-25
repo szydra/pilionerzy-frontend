@@ -44,7 +44,7 @@ export class GameComponent implements OnInit {
 
   onResign(): void {
     this.waiting = true;
-    this.gameService.sendAnswer(null).then(correctAnswer => {
+    this.gameService.stopGame().then(correctAnswer => {
       this.game.end = true;
       this.game.level--;
       this.game.correct = correctAnswer;

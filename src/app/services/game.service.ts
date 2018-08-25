@@ -30,6 +30,14 @@ export class GameService {
     );
   }
 
+  stopGame(): Promise<string> {
+    let url = "http://localhost:8080/game/stop/" + localStorage.getItem("gameId");
+    return this.http.get(url).toPromise().then(res => {
+      localStorage.removeItem("gameId");
+      return res.toString();
+    });
+  }
+
   getQuestion(): Promise<Question> {
     let url = "http://localhost:8080/question/get/";
     let gameId = localStorage.getItem("gameId");
