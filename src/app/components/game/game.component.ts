@@ -15,6 +15,7 @@ export class GameComponent implements OnInit {
   awards: string[] = Game.AWARDS();
   levels: number[] = Array(Game.HIGHEST_LEVEL()).fill(0).map((x, i) => Game.HIGHEST_LEVEL() - i - 1);
   game: Game;
+  showError: boolean = false;
   waiting: boolean = false;
 
   constructor(private gameService: GameService,
@@ -37,7 +38,16 @@ export class GameComponent implements OnInit {
     }
   }
 
+  onError(error: Error) {
+    console.error("An unknown error occurred", error);
+    this.showError = true;
+    this.game.end = true;
+    this.game.level--;
+    this.gameUiService.roundLevelBoxCorners();
+  }
+
   onNewGameRequest() {
+    this.showError = false;
     this.gameUiService.resetLevelBoxCorners();
     this.game = new Game();
   }
@@ -48,9 +58,9 @@ export class GameComponent implements OnInit {
       this.game.end = true;
       this.game.level--;
       this.game.correct = correctAnswer;
-      this.waiting = false;
       this.gameUiService.roundLevelBoxCorners();
-    });
+    }).catch(error => this.onError(error))
+      .then(() => this.waiting = false);
     this.gameUiService.disableHover();
   }
 
