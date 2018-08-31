@@ -32,11 +32,7 @@ export class QuestionComponent implements OnChanges {
         this.game.correct = correctAnswer;
         this.waiting = false;
         correctAnswer === prefix ? this.continueGame() : this.finishGame();
-      })
-      .catch(error => {
-        this.errorEmitter.emit(error);
-        this.reset();
-      });
+      }).catch(error => this.handleError(error));
   }
 
   continueGame() {
@@ -76,10 +72,7 @@ export class QuestionComponent implements OnChanges {
         this.gameUiService.enableHover();
         this.reset();
         this.gameStateChange.emit(this.game);
-      }).catch(error => {
-        this.errorEmitter.emit(error);
-        this.reset();
-      });
+      }).catch(error => this.handleError(error));
   }
 
   reset(): void {
@@ -88,14 +81,15 @@ export class QuestionComponent implements OnChanges {
     this.waiting = false;
   }
 
+  handleError(error: Error) {
+    this.errorEmitter.emit(error);
+    this.reset();
+  }
+
   ngOnChanges(changes) {
     this.waiting = true;
     this.gameService.startNewGame()
       .then(() => this.getQuestion())
-      .catch(error => {
-        this.errorEmitter.emit(error);
-        this.reset();
-      });
-
+      .catch(error => this.handleError(error));
   }
 }
