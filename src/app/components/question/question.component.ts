@@ -15,6 +15,7 @@ import { GameUiService } from '../../services/game-ui.service';
 export class QuestionComponent implements OnChanges {
   @Input() game: Game;
   @Output() gameStateChange: EventEmitter<Game> = new EventEmitter();
+  @Output() errorEmitter: EventEmitter<Error> = new EventEmitter();
   selected: string;
   question: Question;
   waiting: boolean = false;
@@ -30,12 +31,8 @@ export class QuestionComponent implements OnChanges {
       .then(correctAnswer => {
         this.game.correct = correctAnswer;
         this.waiting = false;
-        if (correctAnswer === prefix) {
-          this.continueGame();
-        } else {
-          this.finishGame();
-        }
-      });
+        correctAnswer === prefix ? this.continueGame() : this.finishGame();
+      }).catch(error => this.handleError(error));
   }
 
   continueGame() {
@@ -75,7 +72,7 @@ export class QuestionComponent implements OnChanges {
         this.gameUiService.enableHover();
         this.reset();
         this.gameStateChange.emit(this.game);
-      });
+      }).catch(error => this.handleError(error));
   }
 
   reset(): void {
@@ -84,9 +81,15 @@ export class QuestionComponent implements OnChanges {
     this.waiting = false;
   }
 
+  handleError(error: Error) {
+    this.errorEmitter.emit(error);
+    this.reset();
+  }
+
   ngOnChanges(changes) {
-    if (!changes.game.currentValue.level) {
-      this.getQuestion();
-    }
+    this.waiting = true;
+    this.gameService.startNewGame()
+      .then(() => this.getQuestion())
+      .catch(error => this.handleError(error));
   }
 }
