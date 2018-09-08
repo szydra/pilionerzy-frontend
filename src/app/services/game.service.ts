@@ -26,7 +26,7 @@ export class GameService {
   startNewGame(): Promise<void> {
     let url = "http://localhost:8080/game/start/";
     return this.http.get(url).toPromise().then(
-      gameId => localStorage.setItem("gameId", gameId.toString())
+      game => localStorage.setItem("gameId", game["id"])
     );
   }
 
@@ -34,7 +34,7 @@ export class GameService {
     let url = "http://localhost:8080/game/stop/" + localStorage.getItem("gameId");
     return this.http.get(url).toPromise().then(res => {
       localStorage.removeItem("gameId");
-      return res.toString();
+      return res["prefix"];
     });
   }
 
