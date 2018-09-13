@@ -36,9 +36,9 @@ span.answer, span.question {
 
 .bevel-important {
   background-position: bottom left, bottom right, top right, top left !important;
-  -moz-background-size: 50% 50% !important;
-  -webkit-background-size: 50% 50% !important;
-  background-size: 50% 50% !important;
+  -moz-background-size: 51% 51% !important;
+  -webkit-background-size: 51% 51% !important;
+  background-size: 51% 51% !important;
   background-repeat: no-repeat !important;
 }
 
@@ -117,16 +117,6 @@ span.answer, span.question {
   line-height: 10px;
   display: inline-block;
   margin: 0 3px 5px;
-}
-
-.stupid-vertical-line {
-  position: absolute;
-  height: 100%;
-  width: 96%;
-  background: inherit;
-  z-index: -1;
-  border-radius: inherit;
-  left: 0;
 }
 
 @media (min-width: 992px) {
