@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Question } from '../models/question';
-import * as config from '../config';
 
-import 'rxjs/add/operator/map';
+import * as config from '../config';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class GameService {
@@ -46,6 +46,6 @@ export class GameService {
     let url = config.REST_ENDPOINT + "/question/get/";
     let gameId = localStorage.getItem("gameId");
     url += gameId ? gameId : 0;
-    return this.http.get(url).map(res => <Question>res).toPromise();
+    return this.http.get(url).pipe(map(res => <Question>res)).toPromise();
   }
 }
