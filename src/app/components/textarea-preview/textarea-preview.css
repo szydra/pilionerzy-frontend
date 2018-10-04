@@ -1,0 +1,8 @@
+.textarea-preview {
+  border: 1px solid #505050;
+  border-radius: .25rem;
+  padding: .375rem .75rem;
+  min-height: 38px;
+  background: #00005b;
+  height: auto;
+}
