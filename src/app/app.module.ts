@@ -13,6 +13,7 @@ import { NavbarComponent } from './components/nav-bar/nav-bar.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NewQuestion } from './components/new-question/new-question.component';
 import { TextareaPreview } from './components/textarea-preview/textarea-preview';
+import { InfoPopover } from './components/info-popover/info-popover';
 
 import { GameService } from './services/game.service';
 import { GameUiService } from './services/game-ui.service';
@@ -32,6 +33,7 @@ import { MathJaxDirective } from './directives/mathjax.directive';
     SpinnerComponent,
     NewQuestion,
     TextareaPreview,
+    InfoPopover,
     MathJaxDirective
   ],
   imports: [

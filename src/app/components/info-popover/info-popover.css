@@ -1,0 +1,16 @@
+.btn-popover {
+  margin-bottom: 3px;
+}
+
+.popover-content {
+  background: #00005b;
+  font-size: 100%;
+}
+
+.popover-content .arrow::after {
+  border-left-color: #00005b;
+}
+
+.popover-icon {
+  font-size: 24px;
+}
