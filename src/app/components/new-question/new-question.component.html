@@ -1,0 +1,46 @@
+<form (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-md-10 offset-md-1">
+      <div class="form-group">
+        <span class="text-white float-left mt-4">Treść pytania:</span>
+        <info-popover></info-popover>
+        <textarea-preview [(inputValue)]="question.content"></textarea-preview>
+      </div>
+    </div>
+  </div>
+  <div class="row text-white">
+    <div class="col-md-5 offset-md-1">
+      <div class="form-group">
+        <span>Odpowiedź A:</span>
+        <textarea-preview [(inputValue)]="question.answers[0].content"></textarea-preview>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group">
+        <span>Odpowiedź B:</span>
+        <textarea-preview [(inputValue)]="question.answers[1].content"></textarea-preview>
+      </div>
+    </div>
+  </div>
+  <div class="row text-white">
+    <div class="col-md-5 offset-md-1">
+      <div class="form-group">
+        <span>Odpowiedź C:</span>
+        <textarea-preview [(inputValue)]="question.answers[2].content"></textarea-preview>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group">
+        <span>Odpowiedź D:</span>
+        <textarea-preview [(inputValue)]="question.answers[3].content"></textarea-preview>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5 offset-md-1">
+      <button type="submit" class="btn btn-primary btn-lg" [disabled]="!question.content">
+        Dodaj
+      </button>
+    </div>
+  </div>
+</form>
