@@ -11,13 +11,21 @@
   <div class="row text-white">
     <div class="col-md-5 offset-md-1">
       <div class="form-group">
-        <span>Odpowiedź A:</span>
+        <input id="answerA" type="radio" name="correctAnswer"
+          value="A" [(ngModel)]="question.correctAnswer"/>
+        <label for="answerA" class="ml-2">
+          Odpowiedź A:
+        </label>
         <textarea-preview [(inputValue)]="question.answers[0].content"></textarea-preview>
       </div>
     </div>
     <div class="col-md-5">
       <div class="form-group">
-        <span>Odpowiedź B:</span>
+        <input id="answerB" type="radio" name="correctAnswer"
+          value="B" [(ngModel)]="question.correctAnswer"/>
+        <label for="answerB" class="ml-2">
+          Odpowiedź B:
+        </label>
         <textarea-preview [(inputValue)]="question.answers[1].content"></textarea-preview>
       </div>
     </div>
@@ -25,22 +33,32 @@
   <div class="row text-white">
     <div class="col-md-5 offset-md-1">
       <div class="form-group">
-        <span>Odpowiedź C:</span>
+        <input id="answerC" type="radio" name="correctAnswer"
+          value="C" [(ngModel)]="question.correctAnswer"/>
+        <label for="answerC" class="ml-2">
+          Odpowiedź C:
+        </label>
         <textarea-preview [(inputValue)]="question.answers[2].content"></textarea-preview>
       </div>
     </div>
     <div class="col-md-5">
       <div class="form-group">
-        <span>Odpowiedź D:</span>
+        <input id="answerD" type="radio" name="correctAnswer"
+          value="D" [(ngModel)]="question.correctAnswer"/>
+        <label for="answerD" class="ml-2">
+          Odpowiedź D:
+        </label>
         <textarea-preview [(inputValue)]="question.answers[3].content"></textarea-preview>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-5 offset-md-1">
-      <button type="submit" class="btn btn-primary btn-lg" [disabled]="!question.content">
-        Dodaj
-      </button>
+    <div class="col-md-10 offset-md-1">
+      <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary btn-lg w-25" [disabled]="!question.content">
+          <span>Dodaj pytanie</span>
+        </button>
+      </div>
     </div>
   </div>
 </form>
