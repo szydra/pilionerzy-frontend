@@ -1,6 +1,14 @@
 <form (ngSubmit)="onSubmit()">
   <div class="row">
     <div class="col-md-10 offset-md-1">
+      <alert-closeable *ngIf="showError"
+        [type]="'danger'"
+        [message]="'Podczas dodawania pytania wystąpił błąd.'">
+      </alert-closeable>
+      <alert-closeable *ngIf="showSuccess"
+        [type]="'success'"
+        [message]="'Pytanie zapisano poprawnie.'">
+      </alert-closeable>
       <div class="form-group">
         <span class="text-white float-left mt-4">Treść pytania:</span>
         <info-popover></info-popover>
@@ -55,10 +63,12 @@
   <div class="row">
     <div class="col-md-10 offset-md-1">
       <div class="form-group text-center">
-        <button type="submit" class="btn btn-primary btn-lg w-25" [disabled]="!question.content">
+        <button type="submit" class="btn btn-primary btn-lg w-25"
+          [disabled]="isButtonSubmitDisabled()">
           <span>Dodaj pytanie</span>
         </button>
       </div>
     </div>
   </div>
 </form>
+<spinner *ngIf="waiting"></spinner>
