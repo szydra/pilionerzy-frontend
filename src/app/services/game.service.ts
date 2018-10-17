@@ -27,16 +27,16 @@ export class GameService {
   }
 
   startNewGame(): Promise<void> {
-    let url = config.REST_ENDPOINT + "/game/start/";
+    let url = config.REST_ENDPOINT + "/games/start-new";
     return this.http.get(url).toPromise().then(
       game => localStorage.setItem("gameId", game["id"])
     );
   }
 
   stopGame(): Promise<string> {
-    let url = config.REST_ENDPOINT + "/game/stop/"
-      + localStorage.getItem("gameId");
-    return this.http.get(url).toPromise().then(res => {
+    let url = config.REST_ENDPOINT + "/games/"
+      + localStorage.getItem("gameId") + "/stop";
+    return this.http.put(url, null).toPromise().then(res => {
       localStorage.removeItem("gameId");
       return res["prefix"];
     });
