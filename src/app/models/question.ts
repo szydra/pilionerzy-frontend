@@ -3,7 +3,6 @@ import { SingleAnswer } from './single-answer';
 export class Question {
   static PREFIXES: string[] = ['A', 'B', 'C', 'D'];
 
-  id: number;
   content: string;
   answers: SingleAnswer[];
   correctAnswer: string;

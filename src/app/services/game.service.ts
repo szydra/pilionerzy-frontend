@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Question } from '../models/question';
 
 import * as config from '../config';
@@ -11,8 +11,8 @@ export class GameService {
   constructor(private http: HttpClient) { }
 
   sendAnswer(selected: string): Promise<string> {
-    let url = config.REST_ENDPOINT + "/answer/send/"
-      + localStorage.getItem("gameId");
+    let url = config.REST_ENDPOINT + "/games/"
+      + this.readGameId() + "/answers";
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(url, JSON.stringify({ "selected": selected }),
       { headers: headers })
@@ -35,7 +35,7 @@ export class GameService {
 
   stopGame(): Promise<string> {
     let url = config.REST_ENDPOINT + "/games/"
-      + localStorage.getItem("gameId") + "/stop";
+      + this.readGameId() + "/stop";
     return this.http.put(url, null).toPromise().then(res => {
       localStorage.removeItem("gameId");
       return res["prefix"];
@@ -43,9 +43,15 @@ export class GameService {
   }
 
   getQuestion(): Promise<Question> {
-    let url = config.REST_ENDPOINT + "/question/get/";
+    let url = config.REST_ENDPOINT + "/questions";
+    let params = new HttpParams().set('game-id', this.readGameId());
+    return this.http.get(url, { params: params })
+      .pipe(map(res => <Question>res))
+      .toPromise();
+  }
+
+  private readGameId(): string {
     let gameId = localStorage.getItem("gameId");
-    url += gameId ? gameId : 0;
-    return this.http.get(url).pipe(map(res => <Question>res)).toPromise();
+    return gameId ? gameId : '0';
   }
 }
