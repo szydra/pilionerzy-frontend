@@ -11,6 +11,7 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 export class TextareaPreview {
   @Input() inputValue: string;
   @Output() inputValueChange = new EventEmitter<string>();
+  @Input() selected: boolean = false;
 
   constructor(private elementRef: ElementRef) {
     fromEvent(elementRef.nativeElement, 'keyup')
