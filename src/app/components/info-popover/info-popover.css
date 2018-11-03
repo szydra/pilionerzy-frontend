@@ -14,3 +14,9 @@
 .popover-icon {
   font-size: 24px;
 }
+
+@media (max-width: 359px) {
+  .popover-content {
+    width: 220px;
+  }
+}
