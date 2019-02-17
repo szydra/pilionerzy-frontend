@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-lg-9 col-md-8">
     <div class="left-container">
-      <div *ngIf="game.end" class="row">
+      <div *ngIf="game.finished" class="row">
         <div class="col-sm-12 text-center">
           <div *ngIf="!showError" class="end-info mt-3 text-white">
             <span *ngIf="game.level === -1">Niestety nie udało Ci się nic wygrać.</span>
@@ -29,14 +29,14 @@
       <div class="level-box"
         id="level-box{{lev}}"
         *ngFor="let lev of levels"
-        [ngClass]="lev === game.level && !game.end ? 'bg-warning' : lev > game.level ? '' : 'bg-success'"
+        [ngClass]="lev === game.level && !game.finished ? 'bg-warning' : lev > game.level ? '' : 'bg-success'"
         [ngStyle]="{'font-weight': isGuaranted(lev) ? 'bold' : 'normal'}">
         {{game.awards[lev]}}
       </div>
       <div class="row">
         <div class="col-sm-12 text-center mt-1 mb-1">
           <button class="btn btn-primary btn-lg"
-            [disabled]="game.end"
+            [disabled]="game.finished"
             (click)="onResign()">Rezygnuj</button>
         </div>
       </div>

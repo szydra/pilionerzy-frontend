@@ -26,7 +26,7 @@ export class GameComponent implements OnInit {
 
   onGameStateChange(game: Game) {
     this.game = game;
-    if (this.game.end) {
+    if (this.game.finished) {
       for (let i of Game.GUARANTED_LEVELS) {
         if (this.game.level >= i) {
           this.game.level = i - 1;
@@ -40,7 +40,7 @@ export class GameComponent implements OnInit {
   onError(error: Error) {
     console.error("An unknown error occurred", error);
     this.showError = true;
-    this.game.end = true;
+    this.game.finished = true;
     this.game.level--;
     this.gameUiService.roundLevelBoxCorners();
   }
@@ -54,9 +54,9 @@ export class GameComponent implements OnInit {
   onResign(): void {
     this.waiting = true;
     this.gameService.stopGame().then(correctAnswer => {
-      this.game.end = true;
+      this.game.finished = true;
       this.game.level--;
-      this.game.correct = correctAnswer;
+      this.game.lastQuestion.correctAnswer = correctAnswer;
       this.gameUiService.roundLevelBoxCorners();
     }).catch(error => this.onError(error))
       .then(() => this.waiting = false);

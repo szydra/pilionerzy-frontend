@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 
 import { Game } from '../../models/game';
-import { Question } from '../../models/question';
 
 import { GameService } from '../../services/game.service';
 import { GameUiService } from '../../services/game-ui.service';
@@ -17,7 +16,6 @@ export class QuestionComponent implements OnChanges {
   @Output() gameStateChange: EventEmitter<Game> = new EventEmitter();
   @Output() errorEmitter: EventEmitter<Error> = new EventEmitter();
   selected: string;
-  question: Question;
   waiting: boolean = false;
   interval: any;
 
@@ -29,7 +27,7 @@ export class QuestionComponent implements OnChanges {
     this.gameUiService.disableHover();
     this.gameService.sendAnswer(this.selected)
       .then(correctAnswer => {
-        this.game.correct = correctAnswer;
+        this.game.lastQuestion.correctAnswer = correctAnswer;
         this.waiting = false;
         correctAnswer === prefix ? this.continueGame() : this.finishGame();
       }).catch(error => this.handleError(error));
@@ -51,13 +49,13 @@ export class QuestionComponent implements OnChanges {
   }
 
   finishGame() {
-    this.game.end = true;
+    this.game.finished = true;
     this.gameStateChange.emit(this.game);
     this.gameUiService.disableHover();
   }
 
   onClick(prefix: string) {
-    if (!this.game.end && !this.game.correct) {
+    if (!this.game.finished && !this.game.lastQuestion.correctAnswer) {
       this.selected = this.selected === prefix ? undefined : prefix;
     }
   }
@@ -66,7 +64,7 @@ export class QuestionComponent implements OnChanges {
     this.waiting = this.game.level === 0 ? true : false;
     this.gameService.getQuestion()
       .then(question => {
-        this.question = question;
+        this.game.lastQuestion = question;
         clearInterval(this.interval);
         this.gameUiService.updateFontSize();
         this.gameUiService.enableHover();
@@ -76,7 +74,7 @@ export class QuestionComponent implements OnChanges {
   }
 
   reset(): void {
-    this.game.correct = undefined;
+    this.game.lastQuestion.correctAnswer = undefined;
     this.selected = undefined;
     this.waiting = false;
   }

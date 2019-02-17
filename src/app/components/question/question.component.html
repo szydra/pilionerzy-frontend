@@ -1,4 +1,4 @@
-<div *ngIf="question" class="absolute-full-question-container text-white">
+<div *ngIf="game.lastQuestion as question" class="absolute-full-question-container text-white">
   <div class="row">
     <div class="col-sm-12">
       <div class="bevel-important question-content-parent">
@@ -11,17 +11,18 @@
   <div class="row">
     <div class="col-lg-6" *ngFor="let answer of question.answers">
       <div class="answer-container bevel-important"
-        (click)="onClick(answer.prefix)"
+        *ngIf="answer?.prefix as prefix"
+        (click)="onClick(prefix)"
         [ngClass]="{
-            'bg-correct': answer.prefix === game.correct,
-            'bg-incorrect-selected': !(answer.prefix === game.correct) && answer.prefix === selected,
-            'bg-incorrect-unselected': !(answer.prefix === game.correct) && !(answer.prefix === selected)}">
+            'bg-correct': prefix === question.correctAnswer,
+            'bg-incorrect-selected': !(prefix === question.correctAnswer) && prefix === selected,
+            'bg-incorrect-unselected': !(prefix === question.correctAnswer) && !(prefix === selected)}">
         <div class="prefix">
-          <span><span class="span-prefix">&#9670;</span>{{answer.prefix}}:</span>
+          <span><span class="span-prefix">&#9670;</span>{{prefix}}:</span>
         </div>
         <div class="answer-content">
           <span class="answer"
-            id="answer{{answer.prefix}}"
+            id="answer{{prefix}}"
             [mathJax]="answer.content">{{answer.content}}</span>
         </div>
       </div>
@@ -30,7 +31,7 @@
   <div class="row">
     <div class="col-sm-12 text-center mt-1 mb-1">
       <button class="btn btn-primary btn-lg"
-        [disabled]="!selected || game.end || game.correct"
+        [disabled]="!selected || game.finished || question.correctAnswer"
         (click)="checkAnswer(selected)">Wyślij odpowiedź</button>
     </div>
   </div>

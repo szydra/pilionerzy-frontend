@@ -1,3 +1,5 @@
+import { Question } from './question';
+
 export class Game {
   public static readonly HIGHEST_LEVEL: number = 12;
   public static readonly GUARANTED_LEVELS: number[] = [12, 7, 2, 0];
@@ -7,12 +9,12 @@ export class Game {
 
   constructor() {
     this.level = 0;
-    this.end = false;
+    this.finished = false;
   }
 
   level: number;
-  end: boolean;
-  correct: string;
+  finished: boolean;
+  lastQuestion: Question;
 
   get awards(): string[] {
     return Game.AWARDS;
