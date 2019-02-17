@@ -1,18 +1,15 @@
 import { SingleAnswer } from './single-answer';
 
 export class Question {
-  static PREFIXES: string[] = ['A', 'B', 'C', 'D'];
+  static readonly PREFIXES: string[] = ['A', 'B', 'C', 'D'];
 
-  content: string;
+  content: string = '';
   answers: SingleAnswer[];
   correctAnswer: string;
 
   constructor() {
-    this.content = '';
     let answers = new Array<SingleAnswer>();
-    Question.PREFIXES.forEach(function(prefix) {
-      answers.push(new SingleAnswer(prefix, ''));
-    });
+    Question.PREFIXES.forEach(prefix => answers.push(new SingleAnswer(prefix, '')));
     this.answers = answers;
   }
 }
