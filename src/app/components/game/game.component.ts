@@ -12,8 +12,7 @@ import { Game } from '../../models/game';
 })
 
 export class GameComponent implements OnInit {
-  awards: string[] = Game.AWARDS();
-  levels: number[] = Array(Game.HIGHEST_LEVEL()).fill(0).map((x, i) => Game.HIGHEST_LEVEL() - i - 1);
+  levels: number[] = Array.from(new Array(Game.HIGHEST_LEVEL), (x, i) => Game.HIGHEST_LEVEL - i - 1);
   game: Game;
   showError: boolean = false;
   waiting: boolean = false;
@@ -28,7 +27,7 @@ export class GameComponent implements OnInit {
   onGameStateChange(game: Game) {
     this.game = game;
     if (this.game.end) {
-      for (let i of Game.GUARANTED_LEVELS()) {
+      for (let i of Game.GUARANTED_LEVELS) {
         if (this.game.level >= i) {
           this.game.level = i - 1;
           break;
@@ -65,6 +64,6 @@ export class GameComponent implements OnInit {
   }
 
   isGuaranted(level: number): boolean {
-    return Game.GUARANTED_LEVELS().some(lev => lev === level + 1);
+    return Game.GUARANTED_LEVELS.some(lev => lev === level + 1);
   }
 }

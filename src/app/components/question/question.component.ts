@@ -40,7 +40,7 @@ export class QuestionComponent implements OnChanges {
     setTimeout(() => {
       this.game.level++;
       this.gameStateChange.emit(this.game);
-      if (this.game.level < Game.HIGHEST_LEVEL()) {
+      if (this.game.level < Game.HIGHEST_LEVEL) {
         this.getQuestion();
       } else {
         clearInterval(this.interval);

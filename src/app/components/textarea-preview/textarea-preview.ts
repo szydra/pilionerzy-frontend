@@ -9,12 +9,12 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 })
 
 export class TextareaPreview {
+  @Input() selected: boolean = false;
   @Input() inputValue: string;
   @Output() inputValueChange = new EventEmitter<string>();
-  @Input() selected: boolean = false;
 
-  constructor(private elementRef: ElementRef) {
-    fromEvent(elementRef.nativeElement, 'keyup')
+  constructor(private _elementRef: ElementRef<HTMLElement>) {
+    fromEvent(_elementRef.nativeElement, 'keyup')
       .pipe(map((event: any) => {
         return event.target.value;
       }))
