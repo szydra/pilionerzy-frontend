@@ -1,3 +1,23 @@
+<div class="row text-white">
+  <!-- <div class="col-lg-9 col-md-8">Timer</div> -->
+  <div class="col-lg-3 offset-lg-9 col-md-4 offset-md-8">
+    <div class="row">
+      <div class="col text-right">
+        <img *ngIf="!game.usedLifelines.includes(lifeline.FiftyFifty)"
+          src="assets/images/5050.png" class="lifeline lifeline-active"
+          (click)="fiftyFifty()"/>
+        <img *ngIf="game.usedLifelines.includes(lifeline.FiftyFifty)"
+          src="assets/images/5050used.png" class="lifeline"/>
+      </div>
+      <div class="col text-center">
+        <img src="assets/images/PAFused.png" class="lifeline"/>
+      </div>
+      <div class="col text-left">
+        <img src="assets/images/ATAused.png" class="lifeline"/>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="row">
   <div class="col-lg-9 col-md-8">
     <div class="left-container">

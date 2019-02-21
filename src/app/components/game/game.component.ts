@@ -4,6 +4,7 @@ import { GameService } from '../../services/game.service';
 import { GameUiService } from '../../services/game-ui.service';
 
 import { Game } from '../../models/game';
+import { Lifeline } from '../../models/lifeline';
 
 @Component({
   selector: 'game',
@@ -13,6 +14,7 @@ import { Game } from '../../models/game';
 
 export class GameComponent implements OnInit {
   levels: number[] = Array.from(new Array(Game.HIGHEST_LEVEL), (x, i) => Game.HIGHEST_LEVEL - i - 1);
+  lifeline = Lifeline;
   game: Game;
   showError: boolean = false;
   waiting: boolean = false;
