@@ -1,3 +1,4 @@
+import { Lifeline } from './lifeline';
 import { Question } from './question';
 
 export class Game {
@@ -15,6 +16,7 @@ export class Game {
   level: number;
   finished: boolean;
   lastQuestion: Question;
+  usedLifelines: Lifeline[] = [];
 
   get awards(): string[] {
     return Game.AWARDS;
