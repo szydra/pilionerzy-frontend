@@ -50,6 +50,13 @@ export class GameService {
       .toPromise();
   }
 
+  getTwoIncorrectAnswers(): Promise<string[]> {
+    let url = config.REST_ENDPOINT + "/games/" + this.readGameId()
+      + "/fifty-fifty";
+    return this.http.get(url).toPromise()
+      .then(response => response["incorrectPrefixes"]);
+  }
+
   private readGameId(): string {
     let gameId = localStorage.getItem("gameId");
     return gameId ? gameId : '0';
