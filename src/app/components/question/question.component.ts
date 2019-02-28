@@ -74,7 +74,9 @@ export class QuestionComponent implements OnChanges {
   }
 
   reset(): void {
-    this.game.lastQuestion.correctAnswer = undefined;
+    if (this.game.lastQuestion) {
+      this.game.lastQuestion.correctAnswer = undefined;
+    }
     this.selected = undefined;
     this.waiting = false;
   }
