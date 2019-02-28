@@ -68,4 +68,15 @@ export class GameComponent implements OnInit {
   isGuaranted(level: number): boolean {
     return Game.GUARANTED_LEVELS.some(lev => lev === level + 1);
   }
+
+  fiftyFifty() {
+    this.waiting = true;
+    this.gameService.getTwoIncorrectAnswers().then(incorrectPrefixes => {
+      this.game.lastQuestion.answers.forEach((answer, index, answers) => {
+        if (incorrectPrefixes.includes(answer.prefix)) answers[index] = null;
+      });
+    }).catch(error => this.onError(error))
+      .then(() => this.waiting = false);
+    this.game.usedLifelines.push(Lifeline.FiftyFifty);
+  }
 }
