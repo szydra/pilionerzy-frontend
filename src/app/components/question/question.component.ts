@@ -73,6 +73,12 @@ export class QuestionComponent implements OnChanges {
       }).catch(error => this.handleError(error));
   }
 
+  get submitButtonDisabled(): boolean {
+    let answers = this.game.lastQuestion.answers;
+    let selectedVisible = answers.some(e => e && e.prefix == this.selected);
+    return !(this.selected && selectedVisible);
+  }
+
   reset(): void {
     if (this.game.lastQuestion) {
       this.game.lastQuestion.correctAnswer = undefined;
