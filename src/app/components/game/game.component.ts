@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { GameService } from '../../services/game.service';
-import { GameUiService } from '../../services/game-ui.service';
+import {GameService} from '../../services/game.service';
+import {GameUiService} from '../../services/game-ui.service';
 
-import { Game } from '../../models/game';
-import { Lifeline } from '../../models/lifeline';
+import {Game} from '../../models/game';
+import {Lifeline} from '../../models/lifeline';
 
 @Component({
-  selector: 'game',
+  selector: 'pil-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
@@ -16,11 +16,12 @@ export class GameComponent implements OnInit {
   levels: number[] = Array.from(new Array(Game.HIGHEST_LEVEL), (x, i) => Game.HIGHEST_LEVEL - i - 1);
   lifeline = Lifeline;
   game: Game;
-  showError: boolean = false;
-  waiting: boolean = false;
+  showError = false;
+  waiting = false;
 
   constructor(private gameService: GameService,
-    private gameUiService: GameUiService) { }
+              private gameUiService: GameUiService) {
+  }
 
   ngOnInit() {
     this.game = new Game();
@@ -29,7 +30,7 @@ export class GameComponent implements OnInit {
   onGameStateChange(game: Game) {
     this.game = game;
     if (this.game.finished) {
-      for (let i of Game.GUARANTED_LEVELS) {
+      for (const i of Game.GUARANTEED_LEVELS) {
         if (this.game.level >= i) {
           this.game.level = i - 1;
           break;
@@ -40,7 +41,7 @@ export class GameComponent implements OnInit {
   }
 
   onError(error: Error) {
-    console.error("An unknown error occurred", error);
+    console.error('An unknown error occurred', error);
     this.showError = true;
     this.game.finished = true;
     this.game.level--;
@@ -65,15 +66,17 @@ export class GameComponent implements OnInit {
     this.gameUiService.disableHover();
   }
 
-  isGuaranted(level: number): boolean {
-    return Game.GUARANTED_LEVELS.some(lev => lev === level + 1);
+  isGuaranteed(level: number): boolean {
+    return Game.GUARANTEED_LEVELS.some(lev => lev === level + 1);
   }
 
   fiftyFifty() {
     this.waiting = true;
     this.gameService.getTwoIncorrectAnswers().then(incorrectPrefixes => {
       this.game.lastQuestion.answers.forEach((answer, index, answers) => {
-        if (incorrectPrefixes.includes(answer.prefix)) answers[index] = null;
+        if (incorrectPrefixes.includes(answer.prefix)) {
+          answers[index] = null;
+        }
       });
     }).catch(error => this.onError(error))
       .then(() => this.waiting = false);

@@ -1,18 +1,18 @@
 <form (ngSubmit)="onSubmit()">
   <div class="row">
     <div class="col-md-10 offset-md-1">
-      <alert-closeable *ngIf="showError"
-        [type]="'danger'"
-        [message]="'Podczas dodawania pytania wystąpił błąd.'">
-      </alert-closeable>
-      <alert-closeable *ngIf="showSuccess"
-        [type]="'success'"
-        [message]="'Pytanie zapisano poprawnie i oczekuje na aktywację.'">
-      </alert-closeable>
+      <pil-alert-closeable *ngIf="showError"
+                           [type]="'danger'"
+                           [message]="'Podczas dodawania pytania wystąpił błąd.'">
+      </pil-alert-closeable>
+      <pil-alert-closeable *ngIf="showSuccess"
+                           [type]="'success'"
+                           [message]="'Pytanie zapisano poprawnie i oczekuje na aktywację.'">
+      </pil-alert-closeable>
       <div class="form-group">
         <span class="text-white float-left mt-4">Treść pytania:</span>
-        <info-popover></info-popover>
-        <textarea-preview [(inputValue)]="question.content"></textarea-preview>
+        <pil-info-popover></pil-info-popover>
+        <pil-textarea-preview [(inputValue)]="question.content"></pil-textarea-preview>
       </div>
     </div>
   </div>
@@ -22,14 +22,14 @@
         <div class="col-md-6" *ngFor="let answer of question.answers">
           <div class="form-group">
             <input id="answer{{answer.prefix}}" type="radio"
-              name="correctAnswer" value="{{answer.prefix}}"
-              [(ngModel)]="question.correctAnswer"/>
+                   name="correctAnswer" value="{{answer.prefix}}"
+                   [(ngModel)]="question.correctAnswer"/>
             <label for="answer{{answer.prefix}}" class="ml-2">
               Odpowiedź {{answer.prefix}}:
             </label>
-            <textarea-preview [(inputValue)]="answer.content"
-              [selected]="question.correctAnswer === answer.prefix">
-            </textarea-preview>
+            <pil-textarea-preview [(inputValue)]="answer.content"
+                                  [selected]="question.correctAnswer === answer.prefix">
+            </pil-textarea-preview>
           </div>
         </div>
       </div>
@@ -39,11 +39,11 @@
     <div class="col-md-4 offset-md-4">
       <div class="form-group text-center">
         <button type="submit" class="btn btn-primary btn-lg w-75"
-          [disabled]="isButtonSubmitDisabled()">
+                [disabled]="isButtonSubmitDisabled()">
           <span>Dodaj pytanie</span>
         </button>
       </div>
     </div>
   </div>
 </form>
-<spinner *ngIf="waiting"></spinner>
+<pil-spinner *ngIf="waiting"></pil-spinner>

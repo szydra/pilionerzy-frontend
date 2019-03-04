@@ -1,39 +1,39 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import {BrowserModule} from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
+import {NgModule} from '@angular/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {FormsModule} from '@angular/forms';
 
-import { AlertCloseable } from './components/alert-closeable/alert-closeable';
-import { AppComponent } from './app.component';
-import { GameComponent } from './components/game/game.component';
-import { QuestionComponent } from './components/question/question.component';
-import { HomeComponent } from './components/home/home.component';
-import { NavbarComponent } from './components/nav-bar/nav-bar.component';
-import { SpinnerComponent } from './components/spinner/spinner.component';
-import { NewQuestion } from './components/new-question/new-question.component';
-import { TextareaPreview } from './components/textarea-preview/textarea-preview';
-import { InfoPopover } from './components/info-popover/info-popover';
+import {AlertCloseableComponent} from './components/alert-closeable/alert-closeable.component';
+import {AppComponent} from './app.component';
+import {GameComponent} from './components/game/game.component';
+import {QuestionComponent} from './components/question/question.component';
+import {HomeComponent} from './components/home/home.component';
+import {NavBarComponent} from './components/nav-bar/nav-bar.component';
+import {SpinnerComponent} from './components/spinner/spinner.component';
+import {NewQuestionComponent} from './components/new-question/new-question.component';
+import {TextareaPreviewComponent} from './components/textarea-preview/textarea-preview.component';
+import {InfoPopoverComponent} from './components/info-popover/info-popover.component';
 
-import { GameService } from './services/game.service';
-import { GameUiService } from './services/game-ui.service';
-import { QuestionService } from './services/question.service';
-import { AppRoutingModule } from './app-routing.module';
+import {GameService} from './services/game.service';
+import {GameUiService} from './services/game-ui.service';
+import {QuestionService} from './services/question.service';
+import {AppRoutingModule} from './app-routing.module';
 
-import { MathJaxDirective } from './directives/mathjax.directive';
+import {MathJaxDirective} from './directives/mathjax.directive';
 
 @NgModule({
   declarations: [
-    AlertCloseable,
+    AlertCloseableComponent,
     AppComponent,
     QuestionComponent,
     GameComponent,
     HomeComponent,
-    NavbarComponent,
+    NavBarComponent,
     SpinnerComponent,
-    NewQuestion,
-    TextareaPreview,
-    InfoPopover,
+    NewQuestionComponent,
+    TextareaPreviewComponent,
+    InfoPopoverComponent,
     MathJaxDirective
   ],
   imports: [
@@ -51,4 +51,5 @@ import { MathJaxDirective } from './directives/mathjax.directive';
   bootstrap: [AppComponent]
 })
 
-export class AppModule { }
+export class AppModule {
+}

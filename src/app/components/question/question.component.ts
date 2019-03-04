@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 
-import { Game } from '../../models/game';
+import {Game} from '../../models/game';
 
-import { GameService } from '../../services/game.service';
-import { GameUiService } from '../../services/game-ui.service';
+import {GameService} from '../../services/game.service';
+import {GameUiService} from '../../services/game-ui.service';
 
 @Component({
-  selector: 'question',
+  selector: 'pil-question',
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.css']
 })
@@ -16,11 +16,12 @@ export class QuestionComponent implements OnChanges {
   @Output() gameStateChange: EventEmitter<Game> = new EventEmitter();
   @Output() errorEmitter: EventEmitter<Error> = new EventEmitter();
   selected: string;
-  waiting: boolean = false;
+  waiting = false;
   interval: any;
 
   constructor(private gameService: GameService,
-    private gameUiService: GameUiService) { }
+              private gameUiService: GameUiService) {
+  }
 
   checkAnswer(prefix: string) {
     this.waiting = true;
@@ -61,7 +62,7 @@ export class QuestionComponent implements OnChanges {
   }
 
   getQuestion(): void {
-    this.waiting = this.game.level === 0 ? true : false;
+    this.waiting = this.game.level === 0;
     this.gameService.getQuestion()
       .then(question => {
         this.game.lastQuestion = question;
@@ -74,8 +75,8 @@ export class QuestionComponent implements OnChanges {
   }
 
   get submitButtonDisabled(): boolean {
-    let answers = this.game.lastQuestion.answers;
-    let selectedVisible = answers.some(e => e && e.prefix == this.selected);
+    const answers = this.game.lastQuestion.answers;
+    const selectedVisible = answers.some(e => e && e.prefix === this.selected);
     return !(this.selected && selectedVisible);
   }
 

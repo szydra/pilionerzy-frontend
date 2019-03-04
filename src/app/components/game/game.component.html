@@ -4,16 +4,16 @@
     <div class="row mb-lg-1">
       <div class="col text-right">
         <img *ngIf="!game.usedLifelines.includes(lifeline.FiftyFifty)"
-          src="assets/images/5050.png" class="lifeline lifeline-active"
-          (click)="fiftyFifty()"/>
+             src="/assets/images/5050.png" class="lifeline lifeline-active"
+             (click)="fiftyFifty()" alt="Pół na pół"/>
         <img *ngIf="game.usedLifelines.includes(lifeline.FiftyFifty)"
-          src="assets/images/5050used.png" class="lifeline"/>
+             src="/assets/images/5050used.png" class="lifeline" alt="Pół na pół"/>
       </div>
       <div class="col text-center">
-        <img src="assets/images/PAFused.png" class="lifeline"/>
+        <img src="/assets/images/PAFused.png" class="lifeline" alt="Telefon do przyjaciela"/>
       </div>
       <div class="col text-left">
-        <img src="assets/images/ATAused.png" class="lifeline"/>
+        <img src="/assets/images/ATAused.png" class="lifeline" alt="Pytanie do publiczności"/>
       </div>
     </div>
   </div>
@@ -32,37 +32,41 @@
             </span>
           </div>
           <div *ngIf="showError" class="end-info mt-3">
-            <alert-closeable [type]="'danger'"
-              [message]="'Wystąpił nieoczekiwany błąd.'">
-            </alert-closeable>
+            <pil-alert-closeable [type]="'danger'"
+                                 [message]="'Wystąpił nieoczekiwany błąd.'">
+            </pil-alert-closeable>
           </div>
-          <div class="mb-2 mt-2"><button (click)="onNewGameRequest()"
-            class="btn btn-primary btn-lg">Zagraj od nowa</button></div>
+          <div class="mb-2 mt-2">
+            <button (click)="onNewGameRequest()"
+                    class="btn btn-primary btn-lg">Zagraj od nowa
+            </button>
+          </div>
         </div>
       </div>
-      <question [game]="game" (gameStateChange)="onGameStateChange($event)"
-        (errorEmitter)="onError($event)">
-      </question>
+      <pil-question [game]="game" (gameStateChange)="onGameStateChange($event)"
+                    (errorEmitter)="onError($event)">
+      </pil-question>
     </div>
   </div>
   <div class="col-lg-3 col-md-4">
     <div class="absolute-right-container text-white">
       <div class="level-box"
-        id="level-box{{lev}}"
-        *ngFor="let lev of levels"
-        [ngClass]="lev === game.level && !game.finished ?
+           id="level-box{{lev}}"
+           *ngFor="let lev of levels"
+           [ngClass]="lev === game.level && !game.finished ?
           'bg-warning' : lev > game.level ? '' : 'bg-success'"
-        [ngStyle]="{'font-weight': isGuaranted(lev) ? 'bold' : 'normal'}">
+           [ngStyle]="{'font-weight': isGuaranteed(lev) ? 'bold' : 'normal'}">
         {{game.awards[lev]}}
       </div>
       <div class="row">
         <div class="col-sm-12 text-center mt-1 mb-1">
           <button class="btn btn-primary btn-lg"
-            [disabled]="game.finished"
-            (click)="onResign()">Rezygnuj</button>
+                  [disabled]="game.finished"
+                  (click)="onResign()">Rezygnuj
+          </button>
         </div>
       </div>
     </div>
   </div>
 </div>
-<spinner *ngIf="waiting"></spinner>
+<pil-spinner *ngIf="waiting"></pil-spinner>

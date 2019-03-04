@@ -3,7 +3,7 @@
     <div class="col-sm-12">
       <div class="bevel-important question-content-parent">
         <div class="question-content">
-          <span class="question" [mathJax]="question.content">{{question.content}}</span>
+          <span class="question" [pilMathJax]="question.content">{{question.content}}</span>
         </div>
       </div>
     </div>
@@ -11,9 +11,9 @@
   <div class="row">
     <div class="col-lg-6" *ngFor="let answer of question.answers" style="height: 100px;">
       <div class="answer-container bevel-important"
-        *ngIf="answer?.prefix as prefix"
-        (click)="onClick(prefix)"
-        [ngClass]="{
+           *ngIf="answer?.prefix as prefix"
+           (click)="onClick(prefix)"
+           [ngClass]="{
             'bg-correct': prefix === question.correctAnswer,
             'bg-incorrect-selected': !(prefix === question.correctAnswer) && prefix === selected,
             'bg-incorrect-unselected': !(prefix === question.correctAnswer) && !(prefix === selected)}">
@@ -22,8 +22,8 @@
         </div>
         <div class="answer-content">
           <span class="answer"
-            id="answer{{prefix}}"
-            [mathJax]="answer.content">{{answer.content}}</span>
+                id="answer{{prefix}}"
+                [pilMathJax]="answer.content">{{answer.content}}</span>
         </div>
       </div>
     </div>
@@ -31,9 +31,10 @@
   <div class="row">
     <div class="col-sm-12 text-center mt-1 mb-1">
       <button class="btn btn-primary btn-lg"
-        [disabled]="submitButtonDisabled || game.finished || question.correctAnswer"
-        (click)="checkAnswer(selected)">Wyślij odpowiedź</button>
+              [disabled]="submitButtonDisabled || game.finished || question.correctAnswer"
+              (click)="checkAnswer(selected)">Wyślij odpowiedź
+      </button>
     </div>
   </div>
 </div>
-<spinner *ngIf="waiting"></spinner>
+<pil-spinner *ngIf="waiting"></pil-spinner>
