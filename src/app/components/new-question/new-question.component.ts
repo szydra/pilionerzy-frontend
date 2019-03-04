@@ -1,20 +1,21 @@
-import { Component } from '@angular/core';
-import { Question } from '../../models/question';
-import { QuestionService } from '../../services/question.service';
+import {Component} from '@angular/core';
+import {Question} from '../../models/question';
+import {QuestionService} from '../../services/question.service';
 
 @Component({
-  selector: 'new-question',
+  selector: 'pil-new-question',
   templateUrl: './new-question.component.html',
   styleUrls: ['./new-question.component.css']
 })
 
-export class NewQuestion {
+export class NewQuestionComponent {
   question: Question = new Question();
-  showError: boolean = false;
-  showSuccess: boolean = false;
-  waiting: boolean = false;
+  showError = false;
+  showSuccess = false;
+  waiting = false;
 
-  constructor(private questionService: QuestionService) { }
+  constructor(private questionService: QuestionService) {
+  }
 
   onSubmit() {
     this.waiting = true;
@@ -24,9 +25,9 @@ export class NewQuestion {
         this.question = new Question();
         setTimeout(() => this.showSuccess = false, 10000);
       }).catch(error => {
-        this.showError = true;
-        console.error("An unknown error occurred", error);
-      }).then(() => this.waiting = false);
+      this.showError = true;
+      console.error('An unknown error occurred', error);
+    }).then(() => this.waiting = false);
   }
 
   isButtonSubmitDisabled(): boolean {

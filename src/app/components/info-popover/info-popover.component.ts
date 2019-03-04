@@ -1,10 +1,11 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 
 @Component({
-  selector: 'info-popover',
-  templateUrl: './info-popover.html',
+  selector: 'pil-info-popover',
+  templateUrl: './info-popover.component.html',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./info-popover.css']
+  styleUrls: ['./info-popover.component.css']
 })
 
-export class InfoPopover { }
+export class InfoPopoverComponent {
+}
