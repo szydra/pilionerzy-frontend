@@ -1,15 +1,15 @@
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import {Component, ElementRef, EventEmitter, Input, Output} from '@angular/core';
+import {fromEvent} from 'rxjs';
+import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 
 @Component({
-  selector: 'textarea-preview',
-  templateUrl: './textarea-preview.html',
-  styleUrls: ['./textarea-preview.css']
+  selector: 'pil-textarea-preview',
+  templateUrl: './textarea-preview.component.html',
+  styleUrls: ['./textarea-preview.component.css']
 })
 
-export class TextareaPreview {
-  @Input() selected: boolean = false;
+export class TextareaPreviewComponent {
+  @Input() selected = false;
   @Input() inputValue: string;
   @Output() inputValueChange = new EventEmitter<string>();
 
