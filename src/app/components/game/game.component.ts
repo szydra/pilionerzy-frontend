@@ -16,6 +16,7 @@ export class GameComponent implements OnInit {
   levels: number[] = Array.from(new Array(Game.HIGHEST_LEVEL), (x, i) => Game.HIGHEST_LEVEL - i - 1);
   lifeline = Lifeline;
   game: Game;
+  askTheAudienceVisible = false;
   showError = false;
   waiting = false;
 
@@ -81,5 +82,14 @@ export class GameComponent implements OnInit {
     }).catch(error => this.onError(error))
       .then(() => this.waiting = false);
     this.game.usedLifelines.push(Lifeline.FiftyFifty);
+  }
+
+  askTheAudience() {
+    this.askTheAudienceVisible = true;
+    this.game.usedLifelines.push(Lifeline.AskTheAudience);
+  }
+
+  onAskTheAudiencePopupClose() {
+    this.askTheAudienceVisible = false;
   }
 }

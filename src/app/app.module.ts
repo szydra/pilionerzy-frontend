@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 
 import {AlertCloseableComponent} from './components/alert-closeable/alert-closeable.component';
 import {AppComponent} from './app.component';
+import {AskTheAudienceComponent} from './components/ask-the-audience/ask-the-audience.component';
 import {GameComponent} from './components/game/game.component';
 import {QuestionComponent} from './components/question/question.component';
 import {HomeComponent} from './components/home/home.component';
@@ -26,6 +27,7 @@ import {MathJaxDirective} from './directives/mathjax.directive';
   declarations: [
     AlertCloseableComponent,
     AppComponent,
+    AskTheAudienceComponent,
     QuestionComponent,
     GameComponent,
     HomeComponent,

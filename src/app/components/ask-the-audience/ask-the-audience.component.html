@@ -1,0 +1,26 @@
+<div id="bg-ata" class="zero-positioned">
+  <div id="ata" class="bg-secondary font-large text-center zero-positioned">
+    <div class="row mx-1 mx-sm-4">
+      <div *ngFor="let prefix of prefixes" class="col px-0">
+        <div class="bg-dark progress progress-bar-vertical">
+          <div class="progress-bar progress-bar-striped" role="progressbar"
+               aria-valuemin="0" aria-valuemax="100"
+               [attr.aria-valuenow]="parseInt(audienceAnswers.get(prefix))"
+               [style.height]="audienceAnswers.get(prefix)">
+            <span class="font-large">
+              {{audienceAnswers.get(prefix)}}
+            </span>
+          </div>
+        </div>
+        <span class="text-white font-weight-bold">{{prefix}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col text-center mt-1 mb-1">
+        <button class="btn btn-primary btn-lg" (click)="close()">
+          Zamknij
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

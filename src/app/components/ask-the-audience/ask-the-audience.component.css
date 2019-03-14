@@ -1,0 +1,55 @@
+#bg-ata {
+  background-color: rgba(192, 192, 192, 0.5);
+  position: fixed;
+  z-index: 2048;
+  width: 100vw;
+  height: 100vh;
+}
+
+#ata {
+  display: inline-block;
+  border-radius: 10px;
+  width: 480px;
+  height: 300px;
+  position: fixed;
+  margin: auto;
+  z-index: 2049;
+}
+
+.font-large {
+  font-size: 1.25rem !important;
+}
+
+.progress-bar-vertical {
+  width: 50px;
+  min-height: 200px;
+  margin: 10px auto 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: flex-end;
+  -webkit-align-items: flex-end;
+}
+
+.progress-bar-vertical .progress-bar {
+  width: 100%;
+  -webkit-transition: height 0.6s ease;
+  -o-transition: height 0.6s ease;
+  transition: height 0.6s ease;
+  border-radius: inherit;
+  justify-content: flex-end;
+}
+
+.zero-positioned {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+@media (max-width: 575px) {
+  #ata {
+    width: 300px;
+  }
+}

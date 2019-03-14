@@ -13,7 +13,11 @@
         <img src="/assets/images/PAFused.png" class="lifeline" alt="Telefon do przyjaciela"/>
       </div>
       <div class="col text-left">
-        <img src="/assets/images/ATAused.png" class="lifeline" alt="Pytanie do publiczności"/>
+        <img *ngIf="!game.usedLifelines.includes(lifeline.AskTheAudience)"
+             src="/assets/images/ATA.png" class="lifeline lifeline-active"
+             (click)="askTheAudience()" alt="Pytanie do publiczności"/>
+        <img *ngIf="game.usedLifelines.includes(lifeline.AskTheAudience)"
+             src="/assets/images/ATAused.png" class="lifeline" alt="Pytanie do publiczności"/>
       </div>
     </div>
   </div>
@@ -70,3 +74,6 @@
   </div>
 </div>
 <pil-spinner *ngIf="waiting"></pil-spinner>
+<pil-ask-the-audience *ngIf="askTheAudienceVisible"
+                      (popupClosed)="onAskTheAudiencePopupClose()">
+</pil-ask-the-audience>
