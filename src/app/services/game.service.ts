@@ -58,6 +58,14 @@ export class GameService {
       .then(response => response['incorrectPrefixes']);
   }
 
+  getAudienceAnswer(): Promise<Map<string, string>> {
+    const url = config.REST_ENDPOINT + '/games/' + this.readGameId()
+      + '/ask-the-audience';
+    return this.http.get(url)
+      .pipe(map(res => <Map<string, string>>res))
+      .toPromise();
+  }
+
   private readGameId(): string {
     const gameId = localStorage.getItem('gameId');
     return gameId ? gameId : '0';
