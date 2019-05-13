@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {GameService} from '../../services/game.service';
 
 @Component({
   selector: 'pil-ask-the-audience',
@@ -6,16 +7,26 @@ import {Component, EventEmitter, Output} from '@angular/core';
   styleUrls: ['./ask-the-audience.component.css']
 })
 
-export class AskTheAudienceComponent {
+export class AskTheAudienceComponent implements OnInit {
   @Output() popupClosed = new EventEmitter();
-  audienceAnswers = new Map([
-    ['A', '0%'],
-    ['B', '40%'],
-    ['C', '10%'],
-    ['D', '50%']
-  ]);
+  @Output() errorEmitter: EventEmitter<Error> = new EventEmitter();
+  audienceAnswers: Map<string, string>;
+  waiting: boolean;
 
-  parseInt = function(num) {
+  constructor(private gameService: GameService) {
+  }
+
+  ngOnInit(): void {
+    this.waiting = true;
+    this.gameService.getAudienceAnswer()
+      .then(answers => this.audienceAnswers = answers)
+      .catch(error => {
+        this.errorEmitter.emit(error);
+        this.close();
+      }).then(() => this.waiting = false);
+  }
+
+  parseInt = function (num) {
     return parseInt(num, 10);
   };
 
@@ -24,6 +35,6 @@ export class AskTheAudienceComponent {
   }
 
   get prefixes() {
-    return Array.from(this.audienceAnswers.keys());
+    return Object.keys(this.audienceAnswers);
   }
 }

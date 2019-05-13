@@ -75,5 +75,6 @@
 </div>
 <pil-spinner *ngIf="waiting"></pil-spinner>
 <pil-ask-the-audience *ngIf="askTheAudienceVisible"
-                      (popupClosed)="onAskTheAudiencePopupClose()">
+                      (popupClosed)="onAskTheAudiencePopupClose()"
+                      (errorEmitter)="onError($event)">
 </pil-ask-the-audience>
