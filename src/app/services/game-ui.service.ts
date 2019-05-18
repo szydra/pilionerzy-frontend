@@ -6,6 +6,12 @@ export class GameUiService {
   constructor() {
   }
 
+  // This method returns the height of the highest matched element.
+  // https://stackoverflow.com/a/6061029/8701267
+  private static getHeight(elements: HTMLCollection): number {
+    return Math.max.apply(null, Array.from(elements).map(element => element.clientHeight));
+  }
+
   blink(): void {
     setTimeout(() => {
       const divToBlink = document.querySelector('.bg-correct, .bg-incorrect-selected');
@@ -34,22 +40,14 @@ export class GameUiService {
     });
   }
 
-  // This method returns the height of the highest matched element.
-  // https://stackoverflow.com/a/6061029/8701267
-  private getHeight(elements: HTMLCollection): number {
-    return Math.max.apply(null, Array.from(elements).map(function (element) {
-      return element.clientHeight;
-    }));
-  }
-
   private resizeFont(elements: HTMLCollection, maxHeight: number): void {
-    let currentHeight = this.getHeight(elements);
+    let currentHeight = GameUiService.getHeight(elements);
     while (currentHeight > maxHeight) {
       Array.from(elements).forEach(function (element) {
         const style = (<HTMLElement>element).style;
         style.fontSize = parseFloat(style.fontSize) - 1 + 'px';
       });
-      currentHeight = this.getHeight(elements);
+      currentHeight = GameUiService.getHeight(elements);
     }
   }
 
