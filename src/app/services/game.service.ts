@@ -42,9 +42,9 @@ export class GameService {
   stopGame(): Promise<string> {
     const url = config.REST_ENDPOINT + '/games/'
       + GameService.readGameId() + '/stop';
-    return this.http.put(url, null).toPromise().then(res => {
+    return this.http.post(url, null).toPromise().then(res => {
       localStorage.removeItem('gameId');
-      return res['prefix'];
+      return res['correctAnswer'];
     });
   }
 
