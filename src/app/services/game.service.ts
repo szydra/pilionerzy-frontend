@@ -63,6 +63,14 @@ export class GameService {
       .then(response => response['incorrectPrefixes']);
   }
 
+  getFriendAnswer(): Promise<Map<string, string>> {
+    const url = config.REST_ENDPOINT + '/games/' + GameService.readGameId()
+      + '/phone-a-friend';
+    return this.http.get(url)
+      .pipe(map(res => <Map<string, string>>res))
+      .toPromise();
+  }
+
   getAudienceAnswer(): Promise<Map<string, string>> {
     const url = config.REST_ENDPOINT + '/games/' + GameService.readGameId()
       + '/ask-the-audience';

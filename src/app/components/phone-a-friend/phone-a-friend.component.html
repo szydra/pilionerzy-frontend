@@ -1,0 +1,21 @@
+<div id="bg-paf" class="zero-positioned" *ngIf="friendsAnswer">
+  <div id="paf" class="bg-secondary font-large text-center zero-positioned">
+    <div class="row mx-1 mx-sm-4 h-50">
+      <div class="col px-0 my-auto">
+        <span class="text-white">
+          Jestem w <span class="font-weight-bold">{{friendsAnswer['wisdom']}}</span>
+          przekonan{{isFriendAFemale() ? 'a' : 'y'}}, że poprawna odpowiedź to:
+          <span class="font-weight-bold">{{friendsAnswer['prefix']}}</span>
+        </span>
+      </div>
+    </div>
+    <div class="row h-50">
+      <div class="col my-auto">
+        <button class="btn btn-primary btn-lg" (click)="close()">
+          Zamknij
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<pil-spinner *ngIf="waiting"></pil-spinner>
