@@ -32,6 +32,7 @@ export class NewQuestionComponent {
 
   isButtonSubmitDisabled(): boolean {
     return !this.question.content
+      || this.question.content.length < 4
       || !this.question.correctAnswer
       || this.question.answers.some(answer => !answer.content);
   }
