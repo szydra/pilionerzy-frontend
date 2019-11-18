@@ -1,4 +1,4 @@
-import { AppPage } from './app.po';
+import {AppPage} from './app.po';
 
 describe('pilionerzy App', () => {
   let page: AppPage;
@@ -7,8 +7,13 @@ describe('pilionerzy App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should have proper title', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getTitle()).toEqual('Pilionerzy');
+  });
+
+  it('should have link to home page', () => {
+    page.navigateTo();
+    expect(page.getNavBarLink()).toMatch(/\/home$/);
   });
 });
