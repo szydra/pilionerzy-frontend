@@ -49,14 +49,14 @@ span.answer, span.question {
   background: -webkit-linear-gradient(30deg, transparent 22px, #28a745 22px), -webkit-linear-gradient(150deg, transparent 22px, #28a745 22px), -webkit-linear-gradient(210deg, transparent 22px, #28a745 22px), -webkit-linear-gradient(330deg, transparent 22px, #28a745 22px);
 }
 
-.bg-incorrect-unselected {
+.bg-unselected {
   background: #00005b;
   background: -moz-linear-gradient(30deg, transparent 22px, #00005b 22px), -moz-linear-gradient(150deg, transparent 22px, #00005b 22px), -moz-linear-gradient(210deg, transparent 22px, #00005b 22px), -moz-linear-gradient(330deg, transparent 22px, #00005b 22px);
   background: -o-linear-gradient(30deg, transparent 22px, #00005b 22px), -o-linear-gradient(150deg, transparent 22px, #00005b 22px), -o-linear-gradient(210deg, transparent 22px, #00005b 22px), -o-linear-gradient(330deg, transparent 22px, #00005b 22px);
   background: -webkit-linear-gradient(30deg, transparent 22px, #00005b 22px), -webkit-linear-gradient(150deg, transparent 22px, #00005b 22px), -webkit-linear-gradient(210deg, transparent 22px, #00005b 22px), -webkit-linear-gradient(330deg, transparent 22px, #00005b 22px);
 }
 
-.bg-incorrect-unselected:not(.disable-hover):hover {
+.bg-unselected:not(.disable-hover):hover {
   background: #00006b;
   background: -moz-linear-gradient(30deg, transparent 20px, #00006b 20px), -moz-linear-gradient(150deg, transparent 20px, #00006b 20px), -moz-linear-gradient(210deg, transparent 20px, #00006b 20px), -moz-linear-gradient(330deg, transparent 20px, #00006b 20px);
   background: -o-linear-gradient(30deg, transparent 20px, #00006b 20px), -o-linear-gradient(150deg, transparent 20px, #00006b 20px), -o-linear-gradient(210deg, transparent 20px, #00006b 20px), -o-linear-gradient(330deg, transparent 20px, #00006b 20px);
@@ -64,14 +64,14 @@ span.answer, span.question {
   cursor: pointer;
 }
 
-.bg-incorrect-selected {
+.bg-selected {
   background: #ffc107;
   background: -moz-linear-gradient(30deg, transparent 22px, #ffc107 22px), -moz-linear-gradient(150deg, transparent 22px, #ffc107 22px), -moz-linear-gradient(210deg, transparent 22px, #ffc107 22px), -moz-linear-gradient(330deg, transparent 22px, #ffc107 22px);
   background: -o-linear-gradient(30deg, transparent 22px, #ffc107 22px), -o-linear-gradient(150deg, transparent 22px, #ffc107 22px), -o-linear-gradient(210deg, transparent 22px, #ffc107 22px), -o-linear-gradient(330deg, transparent 22px, #ffc107 22px);
   background: -webkit-linear-gradient(30deg, transparent 22px, #ffc107 22px), -webkit-linear-gradient(150deg, transparent 22px, #ffc107 22px), -webkit-linear-gradient(210deg, transparent 22px, #ffc107 22px), -webkit-linear-gradient(330deg, transparent 22px, #ffc107 22px);
 }
 
-.bg-incorrect-selected:not(.disable-hover):hover {
+.bg-selected:not(.disable-hover):hover {
   background: #ffb107;
   background: -moz-linear-gradient(30deg, transparent 20px, #ffb107 20px), -moz-linear-gradient(150deg, transparent 20px, #ffb107 20px), -moz-linear-gradient(210deg, transparent 20px, #ffb107 20px), -moz-linear-gradient(330deg, transparent 20px, #ffb107 20px);
   background: -o-linear-gradient(30deg, transparent 20px, #ffb107 20px), -o-linear-gradient(150deg, transparent 20px, #ffb107 20px), -o-linear-gradient(210deg, transparent 20px, #ffb107 20px), -o-linear-gradient(330deg, transparent 20px, #ffb107 20px);

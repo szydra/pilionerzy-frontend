@@ -14,9 +14,9 @@
            *ngIf="answer?.prefix as prefix"
            (click)="onClick(prefix)"
            [ngClass]="{
-            'bg-correct': prefix === question.correctAnswer,
-            'bg-incorrect-selected': !(prefix === question.correctAnswer) && prefix === selected,
-            'bg-incorrect-unselected': !(prefix === question.correctAnswer) && !(prefix === selected)}">
+            'bg-correct': correctBackground(prefix),
+            'bg-selected': selectedBackground(prefix),
+            'bg-unselected': unselectedBackground(prefix)}">
         <div class="prefix">
           <span><span class="span-prefix">&#9670;</span>{{prefix}}:</span>
         </div>

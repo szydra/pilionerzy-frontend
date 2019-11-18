@@ -12,19 +12,9 @@ export class GameUiService {
     return Math.max.apply(null, Array.from(elements).map(element => element.clientHeight));
   }
 
-  blink(): void {
-    setTimeout(() => {
-      const divToBlink = document.querySelector('.bg-correct, .bg-incorrect-selected');
-      if (divToBlink) {
-        divToBlink.classList.toggle('bg-correct');
-        divToBlink.classList.toggle('bg-incorrect-selected');
-      }
-    });
-  }
-
   disableHover(): void {
     setTimeout(() => {
-      Array.from(document.querySelectorAll('.bg-incorrect-unselected, .bg-incorrect-selected'))
+      Array.from(document.querySelectorAll('.bg-unselected, .bg-selected'))
         .forEach(function (element) {
           element.classList.add('disable-hover');
         });
@@ -33,7 +23,7 @@ export class GameUiService {
 
   enableHover(): void {
     setTimeout(() => {
-      Array.from(document.querySelectorAll('.bg-incorrect-unselected, .bg-incorrect-selected'))
+      Array.from(document.querySelectorAll('.bg-unselected, .bg-selected'))
         .forEach(function (element) {
           element.classList.remove('disable-hover');
         });
@@ -68,16 +58,6 @@ export class GameUiService {
       if (element) {
         element.style.borderTopLeftRadius = '10px';
         element.style.borderTopRightRadius = '10px';
-      }
-    });
-  }
-
-  stopBlinking(): void {
-    setTimeout(() => {
-      const element = document.querySelector('.bg-correct, .bg-incorrect-selected');
-      if (element) {
-        element.classList.remove('bg-incorrect-selected');
-        element.classList.add('bg-correct');
       }
     });
   }

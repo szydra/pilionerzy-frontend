@@ -18,6 +18,7 @@ export class QuestionComponent implements OnChanges {
   selected: string;
   waiting = false;
   interval: any;
+  blinking = false;
 
   constructor(private gameService: GameService,
               private gameUiService: GameUiService) {
@@ -35,7 +36,7 @@ export class QuestionComponent implements OnChanges {
   }
 
   continueGame() {
-    this.interval = setInterval(() => this.gameUiService.blink(), 500);
+    this.interval = setInterval(() => this.blinking = !this.blinking, 500);
     setTimeout(() => {
       this.game.level++;
       this.gameStateChange.emit(this.game);
@@ -43,7 +44,7 @@ export class QuestionComponent implements OnChanges {
         this.getQuestion();
       } else {
         clearInterval(this.interval);
-        this.gameUiService.stopBlinking();
+        this.blinking = false;
         this.finishGame();
       }
     }, 3000);
@@ -98,5 +99,17 @@ export class QuestionComponent implements OnChanges {
     this.gameService.startNewGame()
       .then(() => this.getQuestion())
       .catch(error => this.handleError(error));
+  }
+
+  correctBackground(prefix: string): boolean {
+    return prefix === this.game.lastQuestion.correctAnswer && (this.blinking || this.game.finished);
+  }
+
+  selectedBackground(prefix: string): boolean {
+    return prefix === this.selected && !this.correctBackground(prefix);
+  }
+
+  unselectedBackground(prefix: string): boolean {
+    return !this.correctBackground(prefix) && !this.selectedBackground(prefix);
   }
 }
