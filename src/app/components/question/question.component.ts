@@ -68,7 +68,6 @@ export class QuestionComponent implements OnChanges {
       .then(question => {
         this.game.lastQuestion = question;
         clearInterval(this.interval);
-        this.gameUiService.updateFontSize();
         this.gameUiService.enableHover();
         this.reset();
         this.gameStateChange.emit(this.game);

@@ -3,7 +3,9 @@
     <div class="col-sm-12">
       <div class="bevel-important question-content-parent">
         <div class="question-content">
-          <span class="question" [pilMathJax]="question.content">{{question.content}}</span>
+          <span class="question" [pilMathJax]="question.content" [pilMaxHeight]="90">
+            {{question.content}}
+          </span>
         </div>
       </div>
     </div>
@@ -21,9 +23,10 @@
           <span><span class="span-prefix">&#9670;</span>{{prefix}}:</span>
         </div>
         <div class="answer-content">
-          <span class="answer"
-                id="answer{{prefix}}"
-                [pilMathJax]="answer.content">{{answer.content}}</span>
+          <span class="answer" id="answer{{prefix}}"
+                [pilMathJax]="answer.content" [pilMaxHeight]="80">
+            {{answer.content}}
+          </span>
         </div>
       </div>
     </div>
