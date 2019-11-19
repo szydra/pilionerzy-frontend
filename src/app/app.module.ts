@@ -24,6 +24,7 @@ import {GameUiService} from './services/game-ui.service';
 import {QuestionService} from './services/question.service';
 
 import {MathJaxDirective} from './directives/mathjax.directive';
+import {MaxHeightDirective} from './directives/max-height.directive';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import {MathJaxDirective} from './directives/mathjax.directive';
     HomeComponent,
     InfoPopoverComponent,
     MathJaxDirective,
+    MaxHeightDirective,
     NavBarComponent,
     NewQuestionComponent,
     PhoneAFriendComponent,
