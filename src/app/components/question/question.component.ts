@@ -3,7 +3,6 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {Game} from '../../models/game';
 
 import {GameService} from '../../services/game.service';
-import {GameUiService} from '../../services/game-ui.service';
 
 @Component({
   selector: 'pil-question',
@@ -19,14 +18,14 @@ export class QuestionComponent implements OnChanges {
   waiting = false;
   interval: any;
   blinking = false;
+  hoverable = true;
 
-  constructor(private gameService: GameService,
-              private gameUiService: GameUiService) {
+  constructor(private gameService: GameService) {
   }
 
   checkAnswer(prefix: string) {
     this.waiting = true;
-    this.gameUiService.disableHover();
+    this.hoverable = false;
     this.gameService.sendAnswer(this.selected)
       .then(correctAnswer => {
         this.game.lastQuestion.correctAnswer = correctAnswer;
@@ -53,7 +52,7 @@ export class QuestionComponent implements OnChanges {
   finishGame() {
     this.game.finished = true;
     this.gameStateChange.emit(this.game);
-    this.gameUiService.disableHover();
+    this.hoverable = false;
   }
 
   onClick(prefix: string) {
@@ -68,7 +67,7 @@ export class QuestionComponent implements OnChanges {
       .then(question => {
         this.game.lastQuestion = question;
         clearInterval(this.interval);
-        this.gameUiService.enableHover();
+        this.hoverable = true;
         this.reset();
         this.gameStateChange.emit(this.game);
       }).catch(error => this.handleError(error));

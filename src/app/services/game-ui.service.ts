@@ -6,24 +6,6 @@ export class GameUiService {
   constructor() {
   }
 
-  disableHover(): void {
-    setTimeout(() => {
-      Array.from(document.querySelectorAll('.bg-unselected, .bg-selected'))
-        .forEach(function (element) {
-          element.classList.add('disable-hover');
-        });
-    });
-  }
-
-  enableHover(): void {
-    setTimeout(() => {
-      Array.from(document.querySelectorAll('.bg-unselected, .bg-selected'))
-        .forEach(function (element) {
-          element.classList.remove('disable-hover');
-        });
-    });
-  }
-
   resetLevelBoxCorners(): void {
     setTimeout(() => {
       Array.from(document.getElementsByClassName('level-box'))
