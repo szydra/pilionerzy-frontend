@@ -19,7 +19,7 @@
             'bg-correct': correctBackground(prefix),
             'bg-selected': selectedBackground(prefix),
             'bg-unselected': unselectedBackground(prefix),
-            'disable-hover': !hoverable}">
+            'disable-hover': !hoverable || game.finished}">
         <div class="prefix">
           <span><span class="span-prefix">&#9670;</span>{{prefix}}:</span>
         </div>

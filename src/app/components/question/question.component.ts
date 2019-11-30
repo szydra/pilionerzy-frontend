@@ -52,7 +52,6 @@ export class QuestionComponent implements OnChanges {
   finishGame() {
     this.game.finished = true;
     this.gameStateChange.emit(this.game);
-    this.hoverable = false;
   }
 
   onClick(prefix: string) {
