@@ -20,12 +20,12 @@
   text-align: center;
 }
 
-.level-box.bg-warning {
+.top-rounded {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 
-#level-box0 {
+.level-box:last-child {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }

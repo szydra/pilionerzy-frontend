@@ -32,11 +32,11 @@
       <div *ngIf="game.finished" class="row">
         <div class="col-sm-12 text-center">
           <div *ngIf="!showError" class="end-info mt-3 text-white">
-            <span *ngIf="game.level === -1">
+            <span *ngIf="game.level === 0">
               Niestety nie udało Ci się nic wygrać.
             </span>
-            <span *ngIf="game.level > -1">
-              Wygrałeś {{game.awards[game.level]}}. Gratulacje!
+            <span *ngIf="game.level > 0">
+              Wygrałeś {{game.awards[game.level - 1]}}. Gratulacje!
             </span>
           </div>
           <div *ngIf="showError" class="end-info mt-3">
@@ -58,13 +58,18 @@
   </div>
   <div class="col-lg-3 col-md-4">
     <div class="absolute-right-container text-white">
-      <div class="level-box"
-           id="level-box{{lev}}"
-           *ngFor="let lev of levels"
-           [ngClass]="lev === game.level && !game.finished ?
-          'bg-warning' : lev > game.level ? '' : 'bg-success'"
-           [ngStyle]="{'font-weight': isGuaranteed(lev) ? 'bold' : 'normal'}">
-        {{game.awards[lev]}}
+      <div>
+        <div class="level-box"
+             id="level-box{{lev}}"
+             *ngFor="let lev of levels"
+             [ngClass]="{
+                'bg-warning': lev === game.level && !game.finished,
+                'bg-success': lev < game.level,
+                'top-rounded': game.finished ? lev === game.level - 1 : lev === game.level
+             }"
+             [ngStyle]="{'font-weight': isGuaranteed(lev) ? 'bold' : 'normal'}">
+          {{game.awards[lev]}}
+        </div>
       </div>
       <div class="row">
         <div class="col-sm-12 text-center mt-1 mb-1">

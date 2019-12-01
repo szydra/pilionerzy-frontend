@@ -20,7 +20,6 @@ import {TextareaPreviewComponent} from './components/textarea-preview/textarea-p
 
 import {AppRoutingModule} from './app-routing.module';
 import {GameService} from './services/game.service';
-import {GameUiService} from './services/game-ui.service';
 import {QuestionService} from './services/question.service';
 
 import {MathJaxDirective} from './directives/mathjax.directive';
@@ -52,7 +51,6 @@ import {MaxHeightDirective} from './directives/max-height.directive';
   ],
   providers: [
     GameService,
-    GameUiService,
     QuestionService
   ],
   bootstrap: [
