@@ -3,6 +3,8 @@ import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {Game} from '../../models/game';
 
 import {GameService} from '../../services/game.service';
+import {interval} from 'rxjs';
+import {finalize, take} from 'rxjs/operators';
 
 @Component({
   selector: 'pil-question',
@@ -16,9 +18,10 @@ export class QuestionComponent implements OnChanges {
   @Output() errorEmitter: EventEmitter<Error> = new EventEmitter();
   selected: string;
   waiting = false;
-  interval: any;
   blinking = false;
   hoverable = true;
+
+  private interval$ = interval(500);
 
   constructor(private gameService: GameService) {
   }
@@ -38,18 +41,21 @@ export class QuestionComponent implements OnChanges {
   }
 
   continueGame() {
-    this.interval = setInterval(() => this.blinking = !this.blinking, 500);
-    setTimeout(() => {
-      this.game.level++;
-      this.gameStateChange.emit(this.game);
-      if (this.game.level < Game.HIGHEST_LEVEL) {
-        this.getQuestion();
-      } else {
-        clearInterval(this.interval);
-        this.blinking = false;
-        this.finishGame();
-      }
-    }, 3000);
+    this.interval$
+      .pipe(
+        take(6),
+        finalize(() => {
+          this.game.level++;
+          this.gameStateChange.emit(this.game);
+          if (this.game.level < Game.HIGHEST_LEVEL) {
+            this.getQuestion();
+          } else {
+            this.blinking = false;
+            this.finishGame();
+          }
+        })
+      )
+      .subscribe(() => this.blinking = !this.blinking);
   }
 
   finishGame() {
@@ -69,7 +75,6 @@ export class QuestionComponent implements OnChanges {
       .subscribe(
         question => {
           this.game.lastQuestion = question;
-          clearInterval(this.interval);
           this.hoverable = true;
           this.reset();
           this.gameStateChange.emit(this.game);
