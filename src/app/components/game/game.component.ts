@@ -4,6 +4,7 @@ import {GameService} from '../../services/game.service';
 
 import {Game} from '../../models/game';
 import {Lifeline} from '../../models/lifeline';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'pil-game',
@@ -52,11 +53,15 @@ export class GameComponent implements OnInit {
 
   onResign(): void {
     this.waiting = true;
-    this.gameService.stopGame().then(correctAnswer => {
-      this.game.finished = true;
-      this.game.lastQuestion.correctAnswer = correctAnswer;
-    }).catch(error => this.onError(error))
-      .then(() => this.waiting = false);
+    this.gameService.stopGame()
+      .pipe(finalize(() => this.waiting = false))
+      .subscribe(
+        correctAnswer => {
+          this.game.finished = true;
+          this.game.lastQuestion.correctAnswer = correctAnswer;
+        },
+        error => this.onError(error)
+      );
   }
 
   isGuaranteed(level: number): boolean {
@@ -65,14 +70,18 @@ export class GameComponent implements OnInit {
 
   fiftyFifty() {
     this.waiting = true;
-    this.gameService.getTwoIncorrectAnswers().then(incorrectPrefixes => {
-      this.game.lastQuestion.answers.forEach((answer, index, answers) => {
-        if (incorrectPrefixes.includes(answer.prefix)) {
-          answers[index] = null;
-        }
-      });
-    }).catch(error => this.onError(error))
-      .then(() => this.waiting = false);
+    this.gameService.getTwoIncorrectAnswers()
+      .pipe(finalize(() => this.waiting = false))
+      .subscribe(
+        incorrectPrefixes => {
+          this.game.lastQuestion.answers.forEach((answer, index, answers) => {
+            if (incorrectPrefixes.includes(answer.prefix)) {
+              answers[index] = null;
+            }
+          });
+        },
+        error => this.onError(error)
+      );
     this.game.usedLifelines.push(Lifeline.FiftyFifty);
   }
 

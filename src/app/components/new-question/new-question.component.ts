@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Question} from '../../models/question';
 import {QuestionService} from '../../services/question.service';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'pil-new-question',
@@ -20,14 +21,18 @@ export class NewQuestionComponent {
   onSubmit() {
     this.waiting = true;
     this.questionService.addQuestion(this.question)
-      .then(() => {
-        this.showSuccess = true;
-        this.question = new Question();
-        setTimeout(() => this.showSuccess = false, 10000);
-      }).catch(error => {
-      this.showError = true;
-      console.error('An unknown error occurred', error);
-    }).then(() => this.waiting = false);
+      .pipe(finalize(() => this.waiting = false))
+      .subscribe(
+        () => {
+          this.showSuccess = true;
+          this.question = new Question();
+          setTimeout(() => this.showSuccess = false, 10000);
+        },
+        error => {
+          this.showError = true;
+          console.error('An unknown error occurred', error);
+        }
+      );
   }
 
   isButtonSubmitDisabled(): boolean {

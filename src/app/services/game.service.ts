@@ -3,7 +3,8 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Question} from '../models/question';
 
 import * as config from '../config';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class GameService {
@@ -12,70 +13,53 @@ export class GameService {
   }
 
   private static readGameId(): string {
-    const gameId = localStorage.getItem('gameId');
-    return gameId ? gameId : '0';
+    return localStorage.getItem('gameId') || '0';
   }
 
-  sendAnswer(selected: string): Promise<string> {
-    const url = config.REST_ENDPOINT + '/games/'
-      + GameService.readGameId() + '/answers';
+  sendAnswer(selected: string): Observable<string> {
+    const url = `${config.REST_ENDPOINT}/games/${GameService.readGameId()}/answers`;
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post(url, JSON.stringify({'selected': selected}),
-      {headers: headers})
-      .toPromise()
-      .then(res => {
-        const answer = res['prefix'];
-        if (answer !== selected) {
-          localStorage.removeItem('gameId');
-        }
-        return answer;
-      });
+    return this.http.post<{ prefix: string }>(url, JSON.stringify({selected}), {headers})
+      .pipe(
+        map(res => res['prefix']),
+        tap(answer => answer !== selected && localStorage.removeItem('gameId'))
+      );
   }
 
-  startNewGame(): Promise<void> {
-    const url = config.REST_ENDPOINT + '/games/start-new';
-    return this.http.get(url).toPromise().then(
-      game => localStorage.setItem('gameId', game['id'])
-    );
+  startNewGame(): Observable<any> {
+    const url = `${config.REST_ENDPOINT}/games/start-new`;
+    return this.http.get(url)
+      .pipe(tap(game => localStorage.setItem('gameId', game['id'])));
   }
 
-  stopGame(): Promise<string> {
-    const url = config.REST_ENDPOINT + '/games/'
-      + GameService.readGameId() + '/stop';
-    return this.http.post(url, null).toPromise().then(res => {
-      localStorage.removeItem('gameId');
-      return res['correctAnswer'];
-    });
+  stopGame(): Observable<string> {
+    const url = `${config.REST_ENDPOINT}/games/${GameService.readGameId()}/stop`;
+    return this.http.post<{ correctAnswer: string }>(url, null)
+      .pipe(
+        map(res => res['correctAnswer']),
+        tap(() => localStorage.removeItem('gameId'))
+      );
   }
 
-  getQuestion(): Promise<Question> {
-    const url = config.REST_ENDPOINT + '/questions';
+  getQuestion(): Observable<Question> {
+    const url = `${config.REST_ENDPOINT}/questions`;
     const params = new HttpParams().set('game-id', GameService.readGameId());
-    return this.http.get(url, {params: params})
-      .pipe(map(res => <Question>res))
-      .toPromise();
+    return this.http.get<Question>(url, {params});
   }
 
-  getTwoIncorrectAnswers(): Promise<string[]> {
-    const url = config.REST_ENDPOINT + '/games/' + GameService.readGameId()
-      + '/fifty-fifty';
-    return this.http.get(url).toPromise()
-      .then(response => response['incorrectPrefixes']);
+  getTwoIncorrectAnswers(): Observable<string[]> {
+    const url = `${config.REST_ENDPOINT}/games/${GameService.readGameId()}/fifty-fifty`;
+    return this.http.get<{ incorrectPrefixes: string[] }>(url)
+      .pipe(map(response => response['incorrectPrefixes']));
   }
 
-  getFriendAnswer(): Promise<Map<string, string>> {
-    const url = config.REST_ENDPOINT + '/games/' + GameService.readGameId()
-      + '/phone-a-friend';
-    return this.http.get(url)
-      .pipe(map(res => <Map<string, string>>res))
-      .toPromise();
+  getFriendAnswer(): Observable<Map<string, string>> {
+    const url = `${config.REST_ENDPOINT}/games/${GameService.readGameId()}/phone-a-friend`;
+    return this.http.get<Map<string, string>>(url);
   }
 
-  getAudienceAnswer(): Promise<Map<string, string>> {
-    const url = config.REST_ENDPOINT + '/games/' + GameService.readGameId()
-      + '/ask-the-audience';
-    return this.http.get(url)
-      .pipe(map(res => <Map<string, string>>res))
-      .toPromise();
+  getAudienceAnswer(): Observable<Map<string, string>> {
+    const url = `${config.REST_ENDPOINT}/games/${GameService.readGameId()}/ask-the-audience`;
+    return this.http.get<Map<string, string>>(url);
   }
 }

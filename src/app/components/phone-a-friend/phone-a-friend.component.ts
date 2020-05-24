@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {GameService} from '../../services/game.service';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'pil-phone-a-friend',
@@ -19,11 +20,14 @@ export class PhoneAFriendComponent implements OnInit {
   ngOnInit(): void {
     this.waiting = true;
     this.gameService.getFriendAnswer()
-      .then(answer => this.friendsAnswer = answer)
-      .catch(error => {
-        this.errorEmitter.emit(error);
-        this.close();
-      }).then(() => this.waiting = false);
+      .pipe(finalize(() => this.waiting = false))
+      .subscribe(
+        answer => this.friendsAnswer = answer,
+        error => {
+          this.errorEmitter.emit(error);
+          this.close();
+        }
+      );
   }
 
   close() {

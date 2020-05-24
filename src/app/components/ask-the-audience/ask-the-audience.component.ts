@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {GameService} from '../../services/game.service';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'pil-ask-the-audience',
@@ -19,11 +20,13 @@ export class AskTheAudienceComponent implements OnInit {
   ngOnInit(): void {
     this.waiting = true;
     this.gameService.getAudienceAnswer()
-      .then(answers => this.audienceAnswers = answers)
-      .catch(error => {
-        this.errorEmitter.emit(error);
-        this.close();
-      }).then(() => this.waiting = false);
+      .pipe(finalize(() => this.waiting = false))
+      .subscribe(
+        answers => this.audienceAnswers = answers,
+        error => {
+          this.errorEmitter.emit(error);
+          this.close();
+        });
   }
 
   parseInt = function (num) {

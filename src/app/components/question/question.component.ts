@@ -27,11 +27,14 @@ export class QuestionComponent implements OnChanges {
     this.waiting = true;
     this.hoverable = false;
     this.gameService.sendAnswer(this.selected)
-      .then(correctAnswer => {
-        this.game.lastQuestion.correctAnswer = correctAnswer;
-        this.waiting = false;
-        correctAnswer === prefix ? this.continueGame() : this.finishGame();
-      }).catch(error => this.handleError(error));
+      .subscribe(
+        correctAnswer => {
+          this.game.lastQuestion.correctAnswer = correctAnswer;
+          this.waiting = false;
+          correctAnswer === prefix ? this.continueGame() : this.finishGame();
+        },
+        error => this.handleError(error)
+      );
   }
 
   continueGame() {
@@ -63,13 +66,16 @@ export class QuestionComponent implements OnChanges {
   getQuestion(): void {
     this.waiting = this.game.level === 0;
     this.gameService.getQuestion()
-      .then(question => {
-        this.game.lastQuestion = question;
-        clearInterval(this.interval);
-        this.hoverable = true;
-        this.reset();
-        this.gameStateChange.emit(this.game);
-      }).catch(error => this.handleError(error));
+      .subscribe(
+        question => {
+          this.game.lastQuestion = question;
+          clearInterval(this.interval);
+          this.hoverable = true;
+          this.reset();
+          this.gameStateChange.emit(this.game);
+        },
+        error => this.handleError(error)
+      );
   }
 
   get submitButtonDisabled(): boolean {
@@ -94,8 +100,10 @@ export class QuestionComponent implements OnChanges {
   ngOnChanges(changes) {
     this.waiting = true;
     this.gameService.startNewGame()
-      .then(() => this.getQuestion())
-      .catch(error => this.handleError(error));
+      .subscribe(
+        () => this.getQuestion(),
+        error => this.handleError(error)
+      );
   }
 
   correctBackground(prefix: string): boolean {
