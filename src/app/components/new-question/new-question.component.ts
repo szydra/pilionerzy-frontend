@@ -8,7 +8,6 @@ import {finalize} from 'rxjs/operators';
   templateUrl: './new-question.component.html',
   styleUrls: ['./new-question.component.css']
 })
-
 export class NewQuestionComponent {
   question: Question = new Question();
   showError = false;

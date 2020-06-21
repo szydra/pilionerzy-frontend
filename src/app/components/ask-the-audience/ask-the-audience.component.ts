@@ -7,7 +7,6 @@ import {finalize} from 'rxjs/operators';
   templateUrl: './ask-the-audience.component.html',
   styleUrls: ['./ask-the-audience.component.css']
 })
-
 export class AskTheAudienceComponent implements OnInit {
   @Output() popupClosed = new EventEmitter();
   @Output() errorEmitter: EventEmitter<Error> = new EventEmitter();

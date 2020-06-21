@@ -7,7 +7,6 @@ import {finalize} from 'rxjs/operators';
   templateUrl: './phone-a-friend.component.html',
   styleUrls: ['./phone-a-friend.component.css']
 })
-
 export class PhoneAFriendComponent implements OnInit {
   @Output() popupClosed = new EventEmitter();
   @Output() errorEmitter: EventEmitter<Error> = new EventEmitter();
