@@ -11,6 +11,7 @@ import {Question} from '../../models/question';
 export class QuestionComponent implements OnChanges {
 
   @Input() question: Question;
+  @Input() correctAnswer: string;
   @Input() active: boolean;
   @Output() answerSelected: EventEmitter<string> = new EventEmitter();
   hoverable = false;
@@ -22,29 +23,36 @@ export class QuestionComponent implements OnChanges {
   private blinking = false;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.question && changes.question.currentValue && changes.question.currentValue.correctAnswer) {
-      this.interval$
-        .pipe(
-          take(6),
-          finalize(() => {
-            this.blinking = false;
-            this.blinkingFinished.next(true);
-          })
-        )
-        .subscribe(() => this.blinking = !this.blinking);
-    } else if (changes.question) {
-      this.selected = null;
+    if (changes.correctAnswer
+      && changes.correctAnswer.currentValue
+      && changes.correctAnswer.currentValue === this.selected) {
+      this.blink();
+    }
+    if (changes.question) {
       this.hoverable = true;
+      this.selected = null;
     }
   }
 
-  sendAnswer() {
+  private blink(): void {
+    this.interval$
+      .pipe(
+        take(6),
+        finalize(() => {
+          this.blinking = false;
+          this.blinkingFinished.next(true);
+        })
+      )
+      .subscribe(() => this.blinking = !this.blinking);
+  }
+
+  sendAnswer(): void {
     this.answerSelected.emit(this.selected);
     this.hoverable = false;
   }
 
   onClick(prefix: string) {
-    if (this.active && !this.question.correctAnswer) {
+    if (this.active && !this.correctAnswer) {
       this.selected = this.selected === prefix ? null : prefix;
     }
   }
@@ -56,7 +64,7 @@ export class QuestionComponent implements OnChanges {
   }
 
   correctBackground(prefix: string): boolean {
-    return prefix === this.question.correctAnswer && (this.blinking || !this.active);
+    return prefix === this.correctAnswer && (this.blinking || !this.active);
   }
 
   selectedBackground(prefix: string): boolean {

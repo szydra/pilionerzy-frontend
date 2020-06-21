@@ -4,10 +4,9 @@ import {GameService} from '../../services/game.service';
 
 import {Game} from '../../models/game';
 import {Lifeline} from '../../models/lifeline';
-import {finalize, skipWhile} from 'rxjs/operators';
+import {finalize, skipWhile, tap} from 'rxjs/operators';
 import {QuestionComponent} from '../question/question.component';
 import {BehaviorSubject, zip} from 'rxjs';
-import {cloneDeep} from 'lodash-es';
 
 @Component({
   selector: 'pil-game',
@@ -65,6 +64,9 @@ export class GameComponent implements OnInit, AfterViewInit {
 
   private getNextQuestion(): void {
     this.gameService.getQuestion()
+      .pipe(
+        tap(() => this.game.correctAnswer = null)
+      )
       .subscribe(
         question => this.game.lastQuestion = question,
         error => this.onError(error)
@@ -74,7 +76,7 @@ export class GameComponent implements OnInit, AfterViewInit {
   onError(error: Error): void {
     console.error('An unknown error occurred', error);
     this.showError = true;
-    this.game.finished = true;
+    this.game.active = false;
   }
 
   onNewGameRequest(): void {
@@ -91,11 +93,9 @@ export class GameComponent implements OnInit, AfterViewInit {
       )
       .subscribe(
         game => {
-          const question = this.game.lastQuestion;
-          question.correctAnswer = game.correctAnswer;
-          this.game.lastQuestion = cloneDeep(question);
+          this.game.correctAnswer = game.correctAnswer;
           this.game.level = game.level;
-          this.game.finished = !game.active;
+          this.game.active = game.active;
           if (game.active) {
             this.continueGame$.next(true);
           }
@@ -112,8 +112,8 @@ export class GameComponent implements OnInit, AfterViewInit {
       )
       .subscribe(
         correctAnswer => {
-          this.game.finished = true;
-          this.game.lastQuestion.correctAnswer = correctAnswer;
+          this.game.active = false;
+          this.game.correctAnswer = correctAnswer;
         },
         error => this.onError(error)
       );
