@@ -8,8 +8,11 @@ import {finalize} from 'rxjs/operators';
   styleUrls: ['./ask-the-audience.component.css']
 })
 export class AskTheAudienceComponent implements OnInit {
-  @Output() popupClosed = new EventEmitter();
-  @Output() errorEmitter: EventEmitter<Error> = new EventEmitter();
+
+  @Output()
+  popupClosed = new EventEmitter();
+  @Output()
+  errorEmitter: EventEmitter<Error> = new EventEmitter();
   audienceAnswers: Map<string, string>;
   waiting: boolean;
 
@@ -19,7 +22,9 @@ export class AskTheAudienceComponent implements OnInit {
   ngOnInit(): void {
     this.waiting = true;
     this.gameService.getAudienceAnswer()
-      .pipe(finalize(() => this.waiting = false))
+      .pipe(
+        finalize(() => this.waiting = false)
+      )
       .subscribe(
         answers => this.audienceAnswers = answers,
         error => {
@@ -28,15 +33,15 @@ export class AskTheAudienceComponent implements OnInit {
         });
   }
 
-  parseInt = function (num) {
+  parseInt = function (num): number {
     return parseInt(num, 10);
   };
 
-  close() {
+  close(): void {
     this.popupClosed.emit();
   }
 
-  get prefixes() {
+  get prefixes(): string[] {
     return Object.keys(this.audienceAnswers);
   }
 }

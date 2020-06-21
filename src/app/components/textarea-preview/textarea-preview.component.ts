@@ -7,11 +7,14 @@ import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
   templateUrl: './textarea-preview.component.html',
   styleUrls: ['./textarea-preview.component.css']
 })
-
 export class TextareaPreviewComponent {
-  @Input() selected = false;
-  @Input() inputValue: string;
-  @Output() inputValueChange = new EventEmitter<string>();
+
+  @Input()
+  selected = false;
+  @Input()
+  inputValue: string;
+  @Output()
+  inputValueChange = new EventEmitter<string>();
 
   constructor(private _elementRef: ElementRef<HTMLElement>) {
     fromEvent(_elementRef.nativeElement, 'keyup')
