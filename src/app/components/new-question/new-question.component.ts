@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {Question} from '../../models/question';
 import {QuestionService} from '../../services/question.service';
 import {finalize} from 'rxjs/operators';
+import {NewQuestion} from '../../models/new-question';
 
 @Component({
   selector: 'pil-new-question',
@@ -9,7 +9,8 @@ import {finalize} from 'rxjs/operators';
   styleUrls: ['./new-question.component.css']
 })
 export class NewQuestionComponent {
-  question: Question = new Question();
+
+  question: NewQuestion = new NewQuestion();
   showError = false;
   showSuccess = false;
   waiting = false;
@@ -24,7 +25,7 @@ export class NewQuestionComponent {
       .subscribe(
         () => {
           this.showSuccess = true;
-          this.question = new Question();
+          this.question = new NewQuestion();
           setTimeout(() => this.showSuccess = false, 10000);
         },
         error => {
