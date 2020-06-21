@@ -5,7 +5,6 @@ export class Question {
 
   content = '';
   answers: SingleAnswer[];
-  correctAnswer: string;
 
   constructor() {
     const answers = new Array<SingleAnswer>();
