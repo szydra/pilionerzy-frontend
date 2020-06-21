@@ -16,13 +16,12 @@ export class GameService {
     return localStorage.getItem('gameId') || '0';
   }
 
-  sendAnswer(selected: string): Observable<string> {
+  sendAnswer(selected: string): Observable<any> {
     const url = `${config.REST_ENDPOINT}/games/${GameService.readGameId()}/answers`;
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     return this.http.post<{ prefix: string }>(url, JSON.stringify({selected}), {headers})
       .pipe(
-        map(res => res['prefix']),
-        tap(answer => answer !== selected && localStorage.removeItem('gameId'))
+        tap(game => game.correctAnswer !== selected && localStorage.removeItem('gameId'))
       );
   }
 
