@@ -41,18 +41,19 @@
           </div>
           <div *ngIf="showError" class="end-info mt-3">
             <pil-alert-closeable [type]="'danger'"
-                                 [message]="'Wystąpił nieoczekiwany błąd.'">
+                                 message="Wystąpił nieoczekiwany błąd.">
             </pil-alert-closeable>
           </div>
           <div class="mb-2 mt-2">
             <button (click)="onNewGameRequest()"
-                    class="btn btn-primary btn-lg">Zagraj od nowa
+                    class="btn btn-primary btn-lg">
+              Zagraj od nowa
             </button>
           </div>
         </div>
       </div>
-      <pil-question [game]="game" (gameStateChange)="onGameStateChange($event)"
-                    (errorEmitter)="onError($event)">
+      <pil-question [question]="game.lastQuestion" [active]="!game.finished"
+                    (answerSelected)="checkAnswer($event)">
       </pil-question>
     </div>
   </div>
@@ -75,7 +76,8 @@
         <div class="col-sm-12 text-center mt-1 mb-1">
           <button class="btn btn-primary btn-lg"
                   [disabled]="game.finished"
-                  (click)="onResign()">Rezygnuj
+                  (click)="onResign()">
+            Rezygnuj
           </button>
         </div>
       </div>
@@ -84,10 +86,10 @@
 </div>
 <pil-spinner *ngIf="waiting"></pil-spinner>
 <pil-phone-a-friend *ngIf="phoneAFriendVisible"
-                    (popupClosed)="onPhoneAFriendPopupClose()"
+                    (popupClosed)="phoneAFriendVisible = false"
                     (errorEmitter)="onError($event)">
 </pil-phone-a-friend>
 <pil-ask-the-audience *ngIf="askTheAudienceVisible"
-                      (popupClosed)="onAskTheAudiencePopupClose()"
+                      (popupClosed)="askTheAudienceVisible = false"
                       (errorEmitter)="onError($event)">
 </pil-ask-the-audience>

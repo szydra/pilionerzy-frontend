@@ -1,118 +1,62 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-
-import {Game} from '../../models/game';
-
-import {GameService} from '../../services/game.service';
-import {interval} from 'rxjs';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {BehaviorSubject, interval} from 'rxjs';
 import {finalize, take} from 'rxjs/operators';
+import {Question} from '../../models/question';
 
 @Component({
   selector: 'pil-question',
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.css']
 })
-
 export class QuestionComponent implements OnChanges {
-  @Input() game: Game;
-  @Output() gameStateChange: EventEmitter<Game> = new EventEmitter();
-  @Output() errorEmitter: EventEmitter<Error> = new EventEmitter();
-  selected: string;
-  waiting = false;
-  blinking = false;
-  hoverable = true;
 
+  @Input() question: Question;
+  @Input() active: boolean;
+  @Output() answerSelected: EventEmitter<string> = new EventEmitter();
+  hoverable = false;
+
+  private selected: string;
+  private blinkingFinished = new BehaviorSubject<boolean>(null);
+  blinkingFinished$ = this.blinkingFinished.asObservable();
   private interval$ = interval(500);
+  private blinking = false;
 
-  constructor(private gameService: GameService) {
-  }
-
-  checkAnswer(prefix: string) {
-    this.waiting = true;
-    this.hoverable = false;
-    this.gameService.sendAnswer(this.selected)
-      .subscribe(
-        correctAnswer => {
-          this.game.lastQuestion.correctAnswer = correctAnswer;
-          this.waiting = false;
-          correctAnswer === prefix ? this.continueGame() : this.finishGame();
-        },
-        error => this.handleError(error)
-      );
-  }
-
-  continueGame() {
-    this.interval$
-      .pipe(
-        take(6),
-        finalize(() => {
-          this.game.level++;
-          this.gameStateChange.emit(this.game);
-          if (this.game.level < Game.HIGHEST_LEVEL) {
-            this.getQuestion();
-          } else {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.question && changes.question.currentValue && changes.question.currentValue.correctAnswer) {
+      this.interval$
+        .pipe(
+          take(6),
+          finalize(() => {
             this.blinking = false;
-            this.finishGame();
-          }
-        })
-      )
-      .subscribe(() => this.blinking = !this.blinking);
-  }
-
-  finishGame() {
-    this.game.finished = true;
-    this.gameStateChange.emit(this.game);
-  }
-
-  onClick(prefix: string) {
-    if (!this.game.finished && !this.game.lastQuestion.correctAnswer) {
-      this.selected = this.selected === prefix ? undefined : prefix;
+            this.blinkingFinished.next(true);
+          })
+        )
+        .subscribe(() => this.blinking = !this.blinking);
+    } else if (changes.question) {
+      this.selected = null;
+      this.hoverable = true;
     }
   }
 
-  getQuestion(): void {
-    this.waiting = this.game.level === 0;
-    this.gameService.getQuestion()
-      .subscribe(
-        question => {
-          this.game.lastQuestion = question;
-          this.hoverable = true;
-          this.reset();
-          this.gameStateChange.emit(this.game);
-        },
-        error => this.handleError(error)
-      );
+  sendAnswer() {
+    this.answerSelected.emit(this.selected);
+    this.hoverable = false;
   }
 
-  get submitButtonDisabled(): boolean {
-    const answers = this.game.lastQuestion.answers;
+  onClick(prefix: string) {
+    if (this.active && !this.question.correctAnswer) {
+      this.selected = this.selected === prefix ? null : prefix;
+    }
+  }
+
+  submitButtonDisabled(): boolean {
+    const answers = this.question.answers;
     const selectedVisible = answers.some(e => e && e.prefix === this.selected);
     return !(this.selected && selectedVisible);
   }
 
-  reset(): void {
-    if (this.game.lastQuestion) {
-      this.game.lastQuestion.correctAnswer = undefined;
-    }
-    this.selected = undefined;
-    this.waiting = false;
-  }
-
-  handleError(error: Error) {
-    this.errorEmitter.emit(error);
-    this.reset();
-  }
-
-  ngOnChanges(changes) {
-    this.waiting = true;
-    this.gameService.startNewGame()
-      .subscribe(
-        () => this.getQuestion(),
-        error => this.handleError(error)
-      );
-  }
-
   correctBackground(prefix: string): boolean {
-    return prefix === this.game.lastQuestion.correctAnswer && (this.blinking || this.game.finished);
+    return prefix === this.question.correctAnswer && (this.blinking || !this.active);
   }
 
   selectedBackground(prefix: string): boolean {
