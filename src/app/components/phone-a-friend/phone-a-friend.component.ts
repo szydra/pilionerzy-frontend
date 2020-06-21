@@ -8,9 +8,13 @@ import {finalize} from 'rxjs/operators';
   styleUrls: ['./phone-a-friend.component.css']
 })
 export class PhoneAFriendComponent implements OnInit {
-  @Output() popupClosed = new EventEmitter();
-  @Output() errorEmitter: EventEmitter<Error> = new EventEmitter();
+
+  @Output()
+  popupClosed = new EventEmitter();
+  @Output()
+  errorEmitter: EventEmitter<Error> = new EventEmitter();
   friendsAnswer: Map<string, string>;
+  isFriendAFemale: boolean;
   waiting: boolean;
 
   constructor(private gameService: GameService) {
@@ -18,6 +22,7 @@ export class PhoneAFriendComponent implements OnInit {
 
   ngOnInit(): void {
     this.waiting = true;
+    this.isFriendAFemale = Math.random() >= 0.5;
     this.gameService.getFriendAnswer()
       .pipe(finalize(() => this.waiting = false))
       .subscribe(
@@ -31,9 +36,5 @@ export class PhoneAFriendComponent implements OnInit {
 
   close() {
     this.popupClosed.emit();
-  }
-
-  isFriendAFemale(): boolean {
-    return Math.random() >= 0.5;
   }
 }
