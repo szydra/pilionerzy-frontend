@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {BehaviorSubject, interval} from 'rxjs';
-import {finalize, take} from 'rxjs/operators';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges} from '@angular/core';
+import {BehaviorSubject, interval, Subject} from 'rxjs';
+import {finalize, take, takeUntil} from 'rxjs/operators';
 import {Question} from '../../models/question';
 
 @Component({
@@ -8,7 +8,7 @@ import {Question} from '../../models/question';
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.css']
 })
-export class QuestionComponent implements OnChanges {
+export class QuestionComponent implements OnChanges, OnDestroy {
 
   @Input() question: Question;
   @Input() correctAnswer: string;
@@ -21,6 +21,7 @@ export class QuestionComponent implements OnChanges {
   blinkingFinished$ = this.blinkingFinished.asObservable();
   private interval$ = interval(500);
   private blinking = false;
+  private destroy$ = new Subject<void>();
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.correctAnswer
@@ -34,9 +35,15 @@ export class QuestionComponent implements OnChanges {
     }
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   private blink(): void {
     this.interval$
       .pipe(
+        takeUntil(this.destroy$),
         take(6),
         finalize(() => {
           this.blinking = false;

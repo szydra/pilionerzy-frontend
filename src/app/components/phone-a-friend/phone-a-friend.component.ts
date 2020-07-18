@@ -1,21 +1,25 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {GameService} from '../../services/game.service';
-import {finalize} from 'rxjs/operators';
+import {finalize, takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'pil-phone-a-friend',
   templateUrl: './phone-a-friend.component.html',
   styleUrls: ['./phone-a-friend.component.css']
 })
-export class PhoneAFriendComponent implements OnInit {
+export class PhoneAFriendComponent implements OnInit, OnDestroy {
 
   @Output()
   popupClosed = new EventEmitter();
+
   @Output()
   errorEmitter: EventEmitter<Error> = new EventEmitter();
   friendsAnswer: Map<string, string>;
   isFriendAFemale: boolean;
   waiting: boolean;
+
+  private destroy$ = new Subject<void>();
 
   constructor(private gameService: GameService) {
   }
@@ -24,7 +28,10 @@ export class PhoneAFriendComponent implements OnInit {
     this.waiting = true;
     this.isFriendAFemale = Math.random() >= 0.5;
     this.gameService.getFriendAnswer()
-      .pipe(finalize(() => this.waiting = false))
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.waiting = false)
+      )
       .subscribe(
         answer => this.friendsAnswer = answer,
         error => {
@@ -32,6 +39,11 @@ export class PhoneAFriendComponent implements OnInit {
           this.close();
         }
       );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   close() {

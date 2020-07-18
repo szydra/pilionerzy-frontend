@@ -1,19 +1,19 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import {GameService} from '../../services/game.service';
 
 import {Game} from '../../models/game';
 import {Lifeline} from '../../models/lifeline';
-import {finalize, skipWhile, tap} from 'rxjs/operators';
+import {finalize, skipWhile, takeUntil, tap} from 'rxjs/operators';
 import {QuestionComponent} from '../question/question.component';
-import {BehaviorSubject, zip} from 'rxjs';
+import {BehaviorSubject, Subject, zip} from 'rxjs';
 
 @Component({
   selector: 'pil-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
-export class GameComponent implements OnInit, AfterViewInit {
+export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   levels: number[] = Array.from(new Array(Game.HIGHEST_LEVEL), (x, i) => Game.HIGHEST_LEVEL - i - 1);
   lifeline = Lifeline;
@@ -26,6 +26,7 @@ export class GameComponent implements OnInit, AfterViewInit {
   @ViewChild(QuestionComponent, {static: false})
   private question: QuestionComponent;
   private continueGame$ = new BehaviorSubject<boolean>(null);
+  private destroy$ = new Subject<void>();
 
   constructor(private gameService: GameService) {
   }
@@ -36,14 +37,23 @@ export class GameComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     zip(
-      this.question.blinkingFinished$.pipe(skipWhile(value => value !== true)),
-      this.continueGame$.asObservable().pipe(skipWhile(value => value !== true))
+      this.question.blinkingFinished$
+        .pipe(skipWhile(value => value !== true)),
+      this.continueGame$.asObservable()
+        .pipe(skipWhile(value => value !== true))
     )
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.getNextQuestion());
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private startNewGame(): void {
     this.gameService.startNewGame()
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         () => this.getFirstQuestion(),
         error => this.onError(error)
@@ -54,6 +64,7 @@ export class GameComponent implements OnInit, AfterViewInit {
     this.waiting = true;
     this.gameService.getQuestion()
       .pipe(
+        takeUntil(this.destroy$),
         finalize(() => this.waiting = false)
       )
       .subscribe(
@@ -65,6 +76,7 @@ export class GameComponent implements OnInit, AfterViewInit {
   private getNextQuestion(): void {
     this.gameService.getQuestion()
       .pipe(
+        takeUntil(this.destroy$),
         tap(() => this.game.correctAnswer = null)
       )
       .subscribe(
@@ -89,6 +101,7 @@ export class GameComponent implements OnInit, AfterViewInit {
     this.waiting = true;
     this.gameService.sendAnswer(prefix)
       .pipe(
+        takeUntil(this.destroy$),
         finalize(() => this.waiting = false)
       )
       .subscribe(
@@ -108,6 +121,7 @@ export class GameComponent implements OnInit, AfterViewInit {
     this.waiting = true;
     this.gameService.stopGame()
       .pipe(
+        takeUntil(this.destroy$),
         finalize(() => this.waiting = false)
       )
       .subscribe(
@@ -126,7 +140,10 @@ export class GameComponent implements OnInit, AfterViewInit {
   fiftyFifty(): void {
     this.waiting = true;
     this.gameService.getTwoIncorrectAnswers()
-      .pipe(finalize(() => this.waiting = false))
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.waiting = false)
+      )
       .subscribe(
         incorrectPrefixes => {
           this.game.lastQuestion.answers.forEach((answer, index, answers) => {
