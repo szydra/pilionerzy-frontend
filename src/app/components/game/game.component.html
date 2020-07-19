@@ -4,22 +4,22 @@
     <div class="row mb-lg-1">
       <div class="col text-right">
         <img *ngIf="!game.usedLifelines.includes(lifeline.FiftyFifty)"
-             src="/assets/images/5050.png" [ngClass]="{'lifeline': true, 'lifeline-active': !game.finished}"
-             (click)="!game.finished && fiftyFifty()" alt="Pół na pół"/>
+             src="/assets/images/5050.png" [ngClass]="{'lifeline': true, 'lifeline-active': game.active}"
+             (click)="game.active && fiftyFifty()" alt="Pół na pół"/>
         <img *ngIf="game.usedLifelines.includes(lifeline.FiftyFifty)"
              src="/assets/images/5050used.png" class="lifeline" alt="Pół na pół"/>
       </div>
       <div class="col text-center">
         <img *ngIf="!game.usedLifelines.includes(lifeline.PhoneAFriend)"
-             src="/assets/images/PAF.png" [ngClass]="{'lifeline': true, 'lifeline-active': !game.finished}"
-             (click)="!game.finished && phoneAFriend()" alt="Telefon do przyjaciela"/>
+             src="/assets/images/PAF.png" [ngClass]="{'lifeline': true, 'lifeline-active': game.active}"
+             (click)="game.active && phoneAFriend()" alt="Telefon do przyjaciela"/>
         <img *ngIf="game.usedLifelines.includes(lifeline.PhoneAFriend)"
              src="/assets/images/PAFused.png" class="lifeline" alt="Telefon do przyjaciela"/>
       </div>
       <div class="col text-left">
         <img *ngIf="!game.usedLifelines.includes(lifeline.AskTheAudience)"
-             src="/assets/images/ATA.png" [ngClass]="{'lifeline': true, 'lifeline-active': !game.finished}"
-             (click)="!game.finished && askTheAudience()" alt="Pytanie do publiczności"/>
+             src="/assets/images/ATA.png" [ngClass]="{'lifeline': true, 'lifeline-active': game.active}"
+             (click)="game.active && askTheAudience()" alt="Pytanie do publiczności"/>
         <img *ngIf="game.usedLifelines.includes(lifeline.AskTheAudience)"
              src="/assets/images/ATAused.png" class="lifeline" alt="Pytanie do publiczności"/>
       </div>
@@ -29,7 +29,7 @@
 <div class="row">
   <div class="col-lg-9 col-md-8">
     <div class="left-container">
-      <div *ngIf="game.finished" class="row">
+      <div *ngIf="!game.active" class="row">
         <div class="col-sm-12 text-center">
           <div *ngIf="!showError" class="end-info mt-3 text-white">
             <span *ngIf="game.level === 0">
@@ -41,18 +41,20 @@
           </div>
           <div *ngIf="showError" class="end-info mt-3">
             <pil-alert-closeable [type]="'danger'"
-                                 [message]="'Wystąpił nieoczekiwany błąd.'">
+                                 message="Wystąpił nieoczekiwany błąd.">
             </pil-alert-closeable>
           </div>
           <div class="mb-2 mt-2">
             <button (click)="onNewGameRequest()"
-                    class="btn btn-primary btn-lg">Zagraj od nowa
+                    class="btn btn-primary btn-lg">
+              Zagraj od nowa
             </button>
           </div>
         </div>
       </div>
-      <pil-question [game]="game" (gameStateChange)="onGameStateChange($event)"
-                    (errorEmitter)="onError($event)">
+      <pil-question [question]="game.lastQuestion" [active]="game.active"
+                    [correctAnswer]="game.correctAnswer"
+                    (answerSelected)="checkAnswer($event)">
       </pil-question>
     </div>
   </div>
@@ -63,9 +65,9 @@
              id="level-box{{lev}}"
              *ngFor="let lev of levels"
              [ngClass]="{
-                'bg-warning': lev === game.level && !game.finished,
+                'bg-warning': lev === game.level && game.active,
                 'bg-success': lev < game.level,
-                'top-rounded': game.finished ? lev === game.level - 1 : lev === game.level
+                'top-rounded': !game.active ? lev === game.level - 1 : lev === game.level
              }"
              [ngStyle]="{'font-weight': isGuaranteed(lev) ? 'bold' : 'normal'}">
           {{game.awards[lev]}}
@@ -74,8 +76,9 @@
       <div class="row">
         <div class="col-sm-12 text-center mt-1 mb-1">
           <button class="btn btn-primary btn-lg"
-                  [disabled]="game.finished"
-                  (click)="onResign()">Rezygnuj
+                  [disabled]="!game.active"
+                  (click)="onResign()">
+            Rezygnuj
           </button>
         </div>
       </div>
@@ -84,10 +87,10 @@
 </div>
 <pil-spinner *ngIf="waiting"></pil-spinner>
 <pil-phone-a-friend *ngIf="phoneAFriendVisible"
-                    (popupClosed)="onPhoneAFriendPopupClose()"
+                    (popupClosed)="phoneAFriendVisible = false"
                     (errorEmitter)="onError($event)">
 </pil-phone-a-friend>
 <pil-ask-the-audience *ngIf="askTheAudienceVisible"
-                      (popupClosed)="onAskTheAudiencePopupClose()"
+                      (popupClosed)="askTheAudienceVisible = false"
                       (errorEmitter)="onError($event)">
 </pil-ask-the-audience>

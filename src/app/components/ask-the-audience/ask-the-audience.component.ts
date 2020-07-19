@@ -1,17 +1,24 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {GameService} from '../../services/game.service';
+import {finalize, takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'pil-ask-the-audience',
   templateUrl: './ask-the-audience.component.html',
   styleUrls: ['./ask-the-audience.component.css']
 })
+export class AskTheAudienceComponent implements OnInit, OnDestroy {
 
-export class AskTheAudienceComponent implements OnInit {
-  @Output() popupClosed = new EventEmitter();
-  @Output() errorEmitter: EventEmitter<Error> = new EventEmitter();
+  @Output()
+  popupClosed = new EventEmitter();
+
+  @Output()
+  errorEmitter: EventEmitter<Error> = new EventEmitter();
   audienceAnswers: Map<string, string>;
   waiting: boolean;
+
+  private destroy$ = new Subject<void>();
 
   constructor(private gameService: GameService) {
   }
@@ -19,22 +26,32 @@ export class AskTheAudienceComponent implements OnInit {
   ngOnInit(): void {
     this.waiting = true;
     this.gameService.getAudienceAnswer()
-      .then(answers => this.audienceAnswers = answers)
-      .catch(error => {
-        this.errorEmitter.emit(error);
-        this.close();
-      }).then(() => this.waiting = false);
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.waiting = false)
+      )
+      .subscribe(
+        answers => this.audienceAnswers = answers,
+        error => {
+          this.errorEmitter.emit(error);
+          this.close();
+        });
   }
 
-  parseInt = function (num) {
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  parseInt = function (num): number {
     return parseInt(num, 10);
   };
 
-  close() {
+  close(): void {
     this.popupClosed.emit();
   }
 
-  get prefixes() {
+  get prefixes(): string[] {
     return Object.keys(this.audienceAnswers);
   }
 }

@@ -4,8 +4,8 @@ import {Component, Input} from '@angular/core';
   selector: 'pil-alert-closeable',
   templateUrl: './alert-closeable.component.html'
 })
-
 export class AlertCloseableComponent {
+
   @Input()
   message: string;
 

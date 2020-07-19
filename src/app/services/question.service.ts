@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Question} from '../models/question';
 
 import * as config from '../config';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class QuestionService {
@@ -10,11 +11,9 @@ export class QuestionService {
   constructor(private http: HttpClient) {
   }
 
-  addQuestion(question: Question): Promise<any> {
-    const url = config.REST_ENDPOINT + '/questions';
+  addQuestion(question: Question): Observable<any> {
+    const url = `${config.REST_ENDPOINT}/questions`;
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post(url, JSON.stringify(question), {headers: headers})
-      .toPromise();
+    return this.http.post(url, JSON.stringify(question), {headers});
   }
-
 }

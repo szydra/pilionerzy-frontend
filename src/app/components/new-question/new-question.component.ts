@@ -1,33 +1,49 @@
-import {Component} from '@angular/core';
-import {Question} from '../../models/question';
+import {Component, OnDestroy} from '@angular/core';
 import {QuestionService} from '../../services/question.service';
+import {finalize, takeUntil} from 'rxjs/operators';
+import {NewQuestion} from '../../models/new-question';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'pil-new-question',
   templateUrl: './new-question.component.html',
   styleUrls: ['./new-question.component.css']
 })
+export class NewQuestionComponent implements OnDestroy {
 
-export class NewQuestionComponent {
-  question: Question = new Question();
+  question: NewQuestion = new NewQuestion();
   showError = false;
   showSuccess = false;
   waiting = false;
 
+  private destroy$ = new Subject<void>();
+
   constructor(private questionService: QuestionService) {
   }
 
-  onSubmit() {
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  onSubmit(): void {
     this.waiting = true;
     this.questionService.addQuestion(this.question)
-      .then(() => {
-        this.showSuccess = true;
-        this.question = new Question();
-        setTimeout(() => this.showSuccess = false, 10000);
-      }).catch(error => {
-      this.showError = true;
-      console.error('An unknown error occurred', error);
-    }).then(() => this.waiting = false);
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.waiting = false)
+      )
+      .subscribe(
+        () => {
+          this.showSuccess = true;
+          this.question = new NewQuestion();
+          setTimeout(() => this.showSuccess = false, 10000);
+        },
+        error => {
+          this.showError = true;
+          console.error('An unknown error occurred', error);
+        }
+      );
   }
 
   isButtonSubmitDisabled(): boolean {

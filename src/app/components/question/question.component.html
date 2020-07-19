@@ -1,4 +1,4 @@
-<div *ngIf="game.lastQuestion as question" class="absolute-full-question-container text-white">
+<div *ngIf="question" class="absolute-full-question-container text-white">
   <div class="row">
     <div class="col-sm-12">
       <div class="bevel-important question-content-parent">
@@ -19,7 +19,8 @@
             'bg-correct': correctBackground(prefix),
             'bg-selected': selectedBackground(prefix),
             'bg-unselected': unselectedBackground(prefix),
-            'disable-hover': !hoverable || game.finished}">
+            'disable-hover': !hoverable || !active
+            }">
         <div class="prefix">
           <span><span class="span-prefix">&#9670;</span>{{prefix}}:</span>
         </div>
@@ -35,10 +36,10 @@
   <div class="row">
     <div class="col-sm-12 text-center mt-1 mb-1">
       <button class="btn btn-primary btn-lg"
-              [disabled]="submitButtonDisabled || game.finished || question.correctAnswer"
-              (click)="checkAnswer(selected)">Wyślij odpowiedź
+              [disabled]="submitButtonDisabled() || !active || correctAnswer"
+              (click)="sendAnswer()">
+        Wyślij odpowiedź
       </button>
     </div>
   </div>
 </div>
-<pil-spinner *ngIf="waiting"></pil-spinner>

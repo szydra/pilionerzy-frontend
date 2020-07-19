@@ -1,96 +1,169 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import {GameService} from '../../services/game.service';
 
 import {Game} from '../../models/game';
 import {Lifeline} from '../../models/lifeline';
+import {finalize, skipWhile, takeUntil, tap} from 'rxjs/operators';
+import {QuestionComponent} from '../question/question.component';
+import {BehaviorSubject, Subject, zip} from 'rxjs';
 
 @Component({
   selector: 'pil-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
+export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
 
-export class GameComponent implements OnInit {
   levels: number[] = Array.from(new Array(Game.HIGHEST_LEVEL), (x, i) => Game.HIGHEST_LEVEL - i - 1);
   lifeline = Lifeline;
-  game: Game;
+  game: Game = new Game();
   phoneAFriendVisible = false;
   askTheAudienceVisible = false;
   showError = false;
   waiting = false;
 
+  @ViewChild(QuestionComponent, {static: false})
+  private question: QuestionComponent;
+  private continueGame$ = new BehaviorSubject<boolean>(null);
+  private destroy$ = new Subject<void>();
+
   constructor(private gameService: GameService) {
   }
 
-  ngOnInit() {
-    this.game = new Game();
+  ngOnInit(): void {
+    this.startNewGame();
   }
 
-  onGameStateChange(game: Game) {
-    this.game = game;
-    if (this.game.finished) {
-      for (const i of Game.GUARANTEED_LEVELS) {
-        if (this.game.level >= i) {
-          this.game.level = i;
-          break;
-        }
-      }
-    }
+  ngAfterViewInit(): void {
+    zip(
+      this.question.blinkingFinished$
+        .pipe(skipWhile(value => value !== true)),
+      this.continueGame$.asObservable()
+        .pipe(skipWhile(value => value !== true))
+    )
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.getNextQuestion());
   }
 
-  onError(error: Error) {
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private startNewGame(): void {
+    this.gameService.startNewGame()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        () => this.getFirstQuestion(),
+        error => this.onError(error)
+      );
+  }
+
+  private getFirstQuestion(): void {
+    this.waiting = true;
+    this.gameService.getQuestion()
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.waiting = false)
+      )
+      .subscribe(
+        question => this.game.lastQuestion = question,
+        error => this.onError(error)
+      );
+  }
+
+  private getNextQuestion(): void {
+    this.gameService.getQuestion()
+      .pipe(
+        takeUntil(this.destroy$),
+        tap(() => this.game.correctAnswer = null)
+      )
+      .subscribe(
+        question => this.game.lastQuestion = question,
+        error => this.onError(error)
+      );
+  }
+
+  onError(error: Error): void {
     console.error('An unknown error occurred', error);
     this.showError = true;
-    this.game.finished = true;
+    this.game.active = false;
   }
 
-  onNewGameRequest() {
+  onNewGameRequest(): void {
     this.showError = false;
     this.game = new Game();
+    this.startNewGame();
+  }
+
+  checkAnswer(prefix: string): void {
+    this.waiting = true;
+    this.gameService.sendAnswer(prefix)
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.waiting = false)
+      )
+      .subscribe(
+        game => {
+          this.game.correctAnswer = game.correctAnswer;
+          this.game.level = game.level;
+          this.game.active = game.active;
+          if (game.active) {
+            this.continueGame$.next(true);
+          }
+        },
+        error => this.onError(error)
+      );
   }
 
   onResign(): void {
     this.waiting = true;
-    this.gameService.stopGame().then(correctAnswer => {
-      this.game.finished = true;
-      this.game.lastQuestion.correctAnswer = correctAnswer;
-    }).catch(error => this.onError(error))
-      .then(() => this.waiting = false);
+    this.gameService.stopGame()
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.waiting = false)
+      )
+      .subscribe(
+        correctAnswer => {
+          this.game.active = false;
+          this.game.correctAnswer = correctAnswer;
+        },
+        error => this.onError(error)
+      );
   }
 
   isGuaranteed(level: number): boolean {
     return Game.GUARANTEED_LEVELS.some(lev => lev === level + 1);
   }
 
-  fiftyFifty() {
+  fiftyFifty(): void {
     this.waiting = true;
-    this.gameService.getTwoIncorrectAnswers().then(incorrectPrefixes => {
-      this.game.lastQuestion.answers.forEach((answer, index, answers) => {
-        if (incorrectPrefixes.includes(answer.prefix)) {
-          answers[index] = null;
-        }
-      });
-    }).catch(error => this.onError(error))
-      .then(() => this.waiting = false);
+    this.gameService.getTwoIncorrectAnswers()
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.waiting = false)
+      )
+      .subscribe(
+        incorrectPrefixes => {
+          this.game.lastQuestion.answers.forEach((answer, index, answers) => {
+            if (incorrectPrefixes.includes(answer.prefix)) {
+              answers[index] = null;
+            }
+          });
+        },
+        error => this.onError(error)
+      );
     this.game.usedLifelines.push(Lifeline.FiftyFifty);
   }
 
-  phoneAFriend() {
+  phoneAFriend(): void {
     this.phoneAFriendVisible = true;
     this.game.usedLifelines.push(Lifeline.PhoneAFriend);
   }
 
-  askTheAudience() {
+  askTheAudience(): void {
     this.askTheAudienceVisible = true;
     this.game.usedLifelines.push(Lifeline.AskTheAudience);
-  }
-
-  onPhoneAFriendPopupClose() {
-    this.phoneAFriendVisible = false;
-  }
-
-  onAskTheAudiencePopupClose() {
-    this.askTheAudienceVisible = false;
   }
 }

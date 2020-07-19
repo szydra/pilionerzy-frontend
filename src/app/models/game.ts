@@ -10,11 +10,12 @@ export class Game {
 
   constructor() {
     this.level = 0;
-    this.finished = false;
+    this.active = true;
   }
 
   level: number;
-  finished: boolean;
+  active: boolean;
+  correctAnswer: string;
   lastQuestion: Question;
   usedLifelines: Lifeline[] = [];
 
