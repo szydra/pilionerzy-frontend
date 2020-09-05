@@ -3,8 +3,8 @@ import {AfterViewInit, Directive, ElementRef, Input, OnInit} from '@angular/core
 @Directive({
   selector: '[pilMaxHeight]'
 })
-
 export class MaxHeightDirective implements OnInit, AfterViewInit {
+
   @Input('pilMaxHeight') maxHeight: number;
 
   constructor(private el: ElementRef) {

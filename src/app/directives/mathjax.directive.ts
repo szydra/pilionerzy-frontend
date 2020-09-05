@@ -5,8 +5,8 @@ declare var MathJax: any;
 @Directive({
   selector: '[pilMathJax]'
 })
-
 export class MathJaxDirective implements OnChanges {
+
   @Input('pilMathJax') mathString: string;
 
   constructor(private el: ElementRef) {
