@@ -59,10 +59,10 @@ span.answer, span.question {
 }
 
 .bg-unselected:not(.disable-hover):hover {
-  background: #00006b;
-  background: -moz-linear-gradient(30deg, transparent 20px, #00006b 20px), -moz-linear-gradient(150deg, transparent 20px, #00006b 20px), -moz-linear-gradient(210deg, transparent 20px, #00006b 20px), -moz-linear-gradient(330deg, transparent 20px, #00006b 20px);
-  background: -o-linear-gradient(30deg, transparent 20px, #00006b 20px), -o-linear-gradient(150deg, transparent 20px, #00006b 20px), -o-linear-gradient(210deg, transparent 20px, #00006b 20px), -o-linear-gradient(330deg, transparent 20px, #00006b 20px);
-  background: -webkit-linear-gradient(30deg, transparent 20px, #00006b 20px), -webkit-linear-gradient(150deg, transparent 20px, #00006b 20px), -webkit-linear-gradient(210deg, transparent 20px, #00006b 20px), -webkit-linear-gradient(330deg, transparent 20px, #00006b 20px);
+  background: $background-unselected-hovered-color;
+  background: $moz-background-unselected-hovered;
+  background: $o-background-unselected-hovered;
+  background: $webkit-background-unselected-hovered;
   cursor: pointer;
 }
 
