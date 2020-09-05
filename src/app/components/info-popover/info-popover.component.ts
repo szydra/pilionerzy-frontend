@@ -4,7 +4,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
   selector: 'pil-info-popover',
   templateUrl: './info-popover.component.html',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./info-popover.component.css']
+  styleUrls: ['./info-popover.component.scss']
 })
 export class InfoPopoverComponent {
 }

@@ -6,7 +6,7 @@ import {Subject} from 'rxjs';
 @Component({
   selector: 'pil-ask-the-audience',
   templateUrl: './ask-the-audience.component.html',
-  styleUrls: ['./ask-the-audience.component.css']
+  styleUrls: ['./ask-the-audience.component.scss']
 })
 export class AskTheAudienceComponent implements OnInit, OnDestroy {
 

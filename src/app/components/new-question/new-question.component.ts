@@ -7,7 +7,7 @@ import {Subject} from 'rxjs';
 @Component({
   selector: 'pil-new-question',
   templateUrl: './new-question.component.html',
-  styleUrls: ['./new-question.component.css']
+  styleUrls: ['./new-question.component.scss']
 })
 export class NewQuestionComponent implements OnDestroy {
 

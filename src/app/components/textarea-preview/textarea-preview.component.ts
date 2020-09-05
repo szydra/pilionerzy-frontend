@@ -5,7 +5,7 @@ import {debounceTime, distinctUntilChanged, map, takeUntil} from 'rxjs/operators
 @Component({
   selector: 'pil-textarea-preview',
   templateUrl: './textarea-preview.component.html',
-  styleUrls: ['./textarea-preview.component.css']
+  styleUrls: ['./textarea-preview.component.scss']
 })
 export class TextareaPreviewComponent implements OnDestroy {
 

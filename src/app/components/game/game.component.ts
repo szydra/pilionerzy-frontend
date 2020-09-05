@@ -11,7 +11,7 @@ import {BehaviorSubject, Subject, zip} from 'rxjs';
 @Component({
   selector: 'pil-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.css']
+  styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
 

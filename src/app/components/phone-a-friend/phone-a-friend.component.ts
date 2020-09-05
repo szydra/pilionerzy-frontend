@@ -6,7 +6,7 @@ import {Subject} from 'rxjs';
 @Component({
   selector: 'pil-phone-a-friend',
   templateUrl: './phone-a-friend.component.html',
-  styleUrls: ['./phone-a-friend.component.css']
+  styleUrls: ['./phone-a-friend.component.scss']
 })
 export class PhoneAFriendComponent implements OnInit, OnDestroy {
 
