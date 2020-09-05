@@ -1,3 +1,5 @@
+@import 'variables';
+
 span.answer, span.question {
   line-height: normal;
   vertical-align: middle;
@@ -43,17 +45,17 @@ span.answer, span.question {
 }
 
 .bg-correct {
-  background: #28a745;
-  background: -moz-linear-gradient(30deg, transparent 22px, #28a745 22px), -moz-linear-gradient(150deg, transparent 22px, #28a745 22px), -moz-linear-gradient(210deg, transparent 22px, #28a745 22px), -moz-linear-gradient(330deg, transparent 22px, #28a745 22px);
-  background: -o-linear-gradient(30deg, transparent 22px, #28a745 22px), -o-linear-gradient(150deg, transparent 22px, #28a745 22px), -o-linear-gradient(210deg, transparent 22px, #28a745 22px), -o-linear-gradient(330deg, transparent 22px, #28a745 22px);
-  background: -webkit-linear-gradient(30deg, transparent 22px, #28a745 22px), -webkit-linear-gradient(150deg, transparent 22px, #28a745 22px), -webkit-linear-gradient(210deg, transparent 22px, #28a745 22px), -webkit-linear-gradient(330deg, transparent 22px, #28a745 22px);
+  background: $background-correct-color;
+  background: $moz-background-correct;
+  background: $o-background-correct;
+  background: $webkit-background-correct;
 }
 
 .bg-unselected {
-  background: #00005b;
-  background: -moz-linear-gradient(30deg, transparent 22px, #00005b 22px), -moz-linear-gradient(150deg, transparent 22px, #00005b 22px), -moz-linear-gradient(210deg, transparent 22px, #00005b 22px), -moz-linear-gradient(330deg, transparent 22px, #00005b 22px);
-  background: -o-linear-gradient(30deg, transparent 22px, #00005b 22px), -o-linear-gradient(150deg, transparent 22px, #00005b 22px), -o-linear-gradient(210deg, transparent 22px, #00005b 22px), -o-linear-gradient(330deg, transparent 22px, #00005b 22px);
-  background: -webkit-linear-gradient(30deg, transparent 22px, #00005b 22px), -webkit-linear-gradient(150deg, transparent 22px, #00005b 22px), -webkit-linear-gradient(210deg, transparent 22px, #00005b 22px), -webkit-linear-gradient(330deg, transparent 22px, #00005b 22px);
+  background: $background-unselected-color;
+  background: $moz-background-unselected;
+  background: $o-background-unselected;
+  background: $webkit-background-unselected;
 }
 
 .bg-unselected:not(.disable-hover):hover {
