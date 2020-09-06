@@ -19,8 +19,6 @@ import {SpinnerComponent} from './components/spinner/spinner.component';
 import {TextareaPreviewComponent} from './components/textarea-preview/textarea-preview.component';
 
 import {AppRoutingModule} from './app-routing.module';
-import {GameService} from './services/game.service';
-import {QuestionService} from './services/question.service';
 
 import {MathJaxDirective} from './directives/mathjax.directive';
 import {MaxHeightDirective} from './directives/max-height.directive';
@@ -48,10 +46,6 @@ import {MaxHeightDirective} from './directives/max-height.directive';
     FormsModule,
     HttpClientModule,
     NgbModule
-  ],
-  providers: [
-    GameService,
-    QuestionService
   ],
   bootstrap: [
     AppComponent

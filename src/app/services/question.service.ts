@@ -5,7 +5,9 @@ import {Question} from '../models/question';
 import * as config from '../config';
 import {Observable} from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class QuestionService {
 
   constructor(private http: HttpClient) {

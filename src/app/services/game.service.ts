@@ -6,7 +6,9 @@ import * as config from '../config';
 import {map, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class GameService {
 
   constructor(private http: HttpClient) {
