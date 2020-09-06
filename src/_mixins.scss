@@ -1,0 +1,6 @@
+@mixin grad-background($color, $corner-size) {
+  background: $color;
+  background: -moz-linear-gradient(30deg, transparent $corner-size, $color $corner-size), -moz-linear-gradient(150deg, transparent $corner-size, $color $corner-size), -moz-linear-gradient(210deg, transparent $corner-size, $color $corner-size), -moz-linear-gradient(330deg, transparent $corner-size, $color $corner-size);
+  background: -o-linear-gradient(30deg, transparent $corner-size, $color $corner-size), -o-linear-gradient(150deg, transparent $corner-size, $color $corner-size), -o-linear-gradient(210deg, transparent $corner-size, $color $corner-size), -o-linear-gradient(330deg, transparent $corner-size, $color $corner-size);
+  background: -webkit-linear-gradient(30deg, transparent $corner-size, $color $corner-size), -webkit-linear-gradient(150deg, transparent $corner-size, $color $corner-size), -webkit-linear-gradient(210deg, transparent $corner-size, $color $corner-size), -webkit-linear-gradient(330deg, transparent $corner-size, $color $corner-size);
+}
