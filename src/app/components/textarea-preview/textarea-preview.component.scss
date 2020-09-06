@@ -1,9 +1,11 @@
-.bg-blue {
-  background-color: #00005b;
+@import '../../../variables';
+
+.bg-unselected {
+  background-color: $background-unselected-color;
 }
 
-.bg-green {
-  background-color: #28a745;
+.bg-selected {
+  background-color: $background-correct-color;
 }
 
 .textarea-preview {
