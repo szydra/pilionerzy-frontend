@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Question} from '../models/question';
 
 import * as config from '../config';
@@ -43,9 +43,8 @@ export class GameService {
   }
 
   getQuestion(): Observable<Question> {
-    const url = `${config.REST_ENDPOINT}/questions`;
-    const params = new HttpParams().set('game-id', GameService.readGameId());
-    return this.http.get<Question>(url, {params});
+    const url = `${config.REST_ENDPOINT}/games/${GameService.readGameId()}/questions`;
+    return this.http.get<Question>(url);
   }
 
   getTwoIncorrectAnswers(): Observable<string[]> {
