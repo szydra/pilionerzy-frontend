@@ -16,6 +16,6 @@ export class QuestionService {
   addQuestion(question: Question): Observable<any> {
     const url = `${config.REST_ENDPOINT}/questions`;
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post(url, JSON.stringify(question), {headers});
+    return this.http.post(url, question, {headers});
   }
 }

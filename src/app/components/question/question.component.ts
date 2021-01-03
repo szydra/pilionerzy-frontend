@@ -58,7 +58,7 @@ export class QuestionComponent implements OnChanges, OnDestroy {
     this.hoverable = false;
   }
 
-  onClick(prefix: string) {
+  onClick(prefix: string): void {
     if (this.active && !this.correctAnswer) {
       this.selected = this.selected === prefix ? null : prefix;
     }

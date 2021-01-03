@@ -21,7 +21,7 @@ export class GameService {
   sendAnswer(selected: string): Observable<any> {
     const url = `${config.REST_ENDPOINT}/games/${GameService.readGameId()}/answers`;
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post<{ prefix: string }>(url, JSON.stringify({selected}), {headers})
+    return this.http.post<{ prefix: string }>(url, {selected}, {headers})
       .pipe(
         tap(game => game.correctAnswer !== selected && localStorage.removeItem('gameId'))
       );
