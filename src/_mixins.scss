@@ -1,6 +1,18 @@
+@function moz-grad($angle, $corner-size, $color) {
+  @return -moz-linear-gradient($angle, transparent $corner-size, $color $corner-size);
+}
+
+@function o-grad($angle, $corner-size, $color) {
+  @return -o-linear-gradient($angle, transparent $corner-size, $color $corner-size);
+}
+
+@function webkit-grad($angle, $corner-size, $color) {
+  @return -webkit-linear-gradient($angle, transparent $corner-size, $color $corner-size);
+}
+
 @mixin grad-background($color, $corner-size) {
   background: $color;
-  background: -moz-linear-gradient(30deg, transparent $corner-size, $color $corner-size), -moz-linear-gradient(150deg, transparent $corner-size, $color $corner-size), -moz-linear-gradient(210deg, transparent $corner-size, $color $corner-size), -moz-linear-gradient(330deg, transparent $corner-size, $color $corner-size);
-  background: -o-linear-gradient(30deg, transparent $corner-size, $color $corner-size), -o-linear-gradient(150deg, transparent $corner-size, $color $corner-size), -o-linear-gradient(210deg, transparent $corner-size, $color $corner-size), -o-linear-gradient(330deg, transparent $corner-size, $color $corner-size);
-  background: -webkit-linear-gradient(30deg, transparent $corner-size, $color $corner-size), -webkit-linear-gradient(150deg, transparent $corner-size, $color $corner-size), -webkit-linear-gradient(210deg, transparent $corner-size, $color $corner-size), -webkit-linear-gradient(330deg, transparent $corner-size, $color $corner-size);
+  background: moz-grad(30deg, $corner-size, $color), moz-grad(150deg, $corner-size, $color), moz-grad(210deg, $corner-size, $color), moz-grad(330deg, $corner-size, $color);
+  background: o-grad(30deg, $corner-size, $color), o-grad(150deg, $corner-size, $color), o-grad(210deg, $corner-size, $color), o-grad(330deg, $corner-size, $color);
+  background: webkit-grad(30deg, $corner-size, $color), webkit-grad(150deg, $corner-size, $color), webkit-grad(210deg, $corner-size, $color), webkit-grad(330deg, $corner-size, $color);
 }
