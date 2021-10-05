@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {GameService} from '../../services/game.service';
-import {finalize, takeUntil} from 'rxjs/operators';
+import {finalize, map, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 
 @Component({
@@ -28,6 +28,7 @@ export class AskTheAudienceComponent implements OnInit, OnDestroy {
     this.gameService.getAudienceAnswer()
       .pipe(
         takeUntil(this.destroy$),
+        map(chart => chart.votesChart),
         finalize(() => this.waiting = false)
       )
       .subscribe(

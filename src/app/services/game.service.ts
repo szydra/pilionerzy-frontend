@@ -58,8 +58,8 @@ export class GameService {
     return this.http.get<Map<string, string>>(url);
   }
 
-  getAudienceAnswer(): Observable<Map<string, string>> {
+  getAudienceAnswer(): Observable<{ votesChart: Map<string, string> }> {
     const url = `${config.REST_ENDPOINT}/games/${GameService.readGameId()}/ask-the-audience`;
-    return this.http.get<Map<string, string>>(url);
+    return this.http.get<{ votesChart: Map<string, string> }>(url);
   }
 }
