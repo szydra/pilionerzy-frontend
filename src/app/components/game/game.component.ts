@@ -23,7 +23,7 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
   showError = false;
   waiting = false;
 
-  @ViewChild(QuestionComponent, {static: false})
+  @ViewChild(QuestionComponent)
   private question: QuestionComponent;
   private continueGame$ = new BehaviorSubject<boolean>(null);
   private destroy$ = new Subject<void>();
