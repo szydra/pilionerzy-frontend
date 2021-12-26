@@ -1,4 +1,5 @@
-import {Directive, ElementRef, Input, OnChanges} from '@angular/core';
+import {Directive, ElementRef, Input, OnChanges, SecurityContext} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
 
 declare var MathJax: any;
 
@@ -9,11 +10,12 @@ export class MathJaxDirective implements OnChanges {
 
   @Input('pilMathJax') mathString: string;
 
-  constructor(private el: ElementRef) {
+  constructor(private el: ElementRef, private sanitizer: DomSanitizer) {
   }
 
   ngOnChanges() {
-    this.el.nativeElement.innerHTML = this.mathString;
-    MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.el.nativeElement]);
+    const nativeElement = this.el.nativeElement;
+    nativeElement.innerHTML = this.sanitizer.sanitize(SecurityContext.HTML, this.mathString);
+    MathJax.typeset([nativeElement]);
   }
 }
