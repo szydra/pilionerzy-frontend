@@ -3,7 +3,7 @@
     <div class="row mx-1 mx-sm-4">
       <div *ngFor="let prefix of prefixes" class="col px-0">
         <div class="bg-dark progress progress-bar-vertical">
-          <div class="progress-bar progress-bar-striped" role="progressbar"
+          <div class="progress-bar progress-bar-striped overflow-visible" role="progressbar"
                aria-valuemin="0" aria-valuemax="100"
                [attr.aria-valuenow]="parseInt(audienceAnswers[prefix])"
                [style.height]="audienceAnswers[prefix]">
@@ -12,7 +12,9 @@
             </span>
           </div>
         </div>
-        <span class="text-white font-weight-bold">{{prefix}}</span>
+        <div class="py-1">
+          <span class="text-white font-weight-bold">{{prefix}}</span>
+        </div>
       </div>
     </div>
     <div class="row">

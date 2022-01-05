@@ -1049,12 +1049,10 @@
     merge-source-map "^1.1.0"
     schema-utils "^2.6.4"
 
-"@ng-bootstrap/ng-bootstrap@^5.1.4":
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-5.1.4.tgz#1ace4d4a7b80017fb1c55547a5569993b4742b5d"
-  integrity sha512-UtL9GBkAMy0O/0Rkc4DG1WoFDWhAnAdvsQuJ1IFLmlN2v6HAX+E84tgUK0n15WLBhYBXXuhRx0dIW2jafjg1xQ==
-  dependencies:
-    tslib "^1.9.0"
+"@ng-bootstrap/ng-bootstrap@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-6.2.0.tgz#0506d612ca6002bd8fa398d006fa2641013e11d4"
+  integrity sha512-wqwhnJFyEwvzWQJjXrEt+7oBTSvu2qPbdYvUFYhDVzOJLWB5M7YEhDAkMrfHQJ0pZNBMGr580FqYue+XiURY0Q==
 
 "@ngtools/webpack@9.1.15":
   version "9.1.15"
@@ -2025,6 +2023,11 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
+
+bootstrap@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.6.1.tgz#bc25380c2c14192374e8dec07cf01b2742d222a2"
+  integrity sha512-0dj+VgI9Ecom+rvvpNZ4MUZJz8dcX7WCX+eTID9+/8HgOkv3dsRzi8BGeZJCQU6flWQVYxwTQnEZFrmJSEO7og==
 
 brace-expansion@^1.1.7:
   version "1.1.11"

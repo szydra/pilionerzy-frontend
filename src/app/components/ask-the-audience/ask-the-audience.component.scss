@@ -18,6 +18,7 @@
 
 .font-large {
   font-size: 1.25rem !important;
+  line-height: normal;
 }
 
 .progress-bar-vertical {
@@ -39,6 +40,10 @@
   transition: height 0.6s ease;
   border-radius: inherit;
   justify-content: flex-end;
+}
+
+.overflow-visible {
+  overflow: visible;
 }
 
 .zero-positioned {
