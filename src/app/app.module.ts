@@ -3,7 +3,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbAlertModule, NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {AlertCloseableComponent} from './components/alert-closeable/alert-closeable.component';
 import {AppComponent} from './app.component';
@@ -45,7 +45,8 @@ import {MaxHeightDirective} from './directives/max-height.directive';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    NgbModule
+    NgbAlertModule,
+    NgbPopoverModule
   ],
   bootstrap: [
     AppComponent
