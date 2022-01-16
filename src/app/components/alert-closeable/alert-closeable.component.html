@@ -1,5 +1,5 @@
 <p *ngIf="showAlert">
-  <ngb-alert [type]="type" [dismissible]="true" (close)="closeAlert()">
+  <ngb-alert [type]="type" [dismissible]="true" (closed)="closeAlert()">
     {{message}}
   </ngb-alert>
 </p>
