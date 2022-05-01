@@ -9,7 +9,6 @@ import {AlertCloseableComponent} from './components/alert-closeable/alert-closea
 import {AppComponent} from './app.component';
 import {AskTheAudienceComponent} from './components/ask-the-audience/ask-the-audience.component';
 import {GameComponent} from './components/game/game.component';
-import {HomeComponent} from './components/home/home.component';
 import {InfoPopoverComponent} from './components/info-popover/info-popover.component';
 import {NewQuestionComponent} from './components/new-question/new-question.component';
 import {PhoneAFriendComponent} from './components/phone-a-friend/phone-a-friend.component';
@@ -28,7 +27,6 @@ import {AppRoutingModule} from './app-routing.module';
     AppComponent,
     AskTheAudienceComponent,
     GameComponent,
-    HomeComponent,
     InfoPopoverComponent,
     MathJaxDirective,
     MaxHeightDirective,
