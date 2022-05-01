@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
-import {GameService} from '../../services/game.service';
+import {GameService} from '@core/services/game.service';
 import {finalize, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 

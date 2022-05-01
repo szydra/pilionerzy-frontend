@@ -3,6 +3,11 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
+    "paths": {
+      "@core/*": [
+        "./app/core/*"
+      ]
+    },
     "types": []
   },
   "files": [

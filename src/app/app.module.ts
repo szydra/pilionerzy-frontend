@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 
 import {NgbAlertModule, NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
@@ -20,6 +19,7 @@ import {MathJaxDirective} from './directives/mathjax.directive';
 import {MaxHeightDirective} from './directives/max-height.directive';
 import {AppCommonModule} from './app-common/app-common.module';
 import {AppRoutingModule} from './app-routing.module';
+import {CoreModule} from '@core/core.module';
 
 @NgModule({
   declarations: [
@@ -40,8 +40,8 @@ import {AppRoutingModule} from './app-routing.module';
     AppCommonModule,
     AppRoutingModule,
     BrowserModule,
+    CoreModule,
     FormsModule,
-    HttpClientModule,
     NgbAlertModule,
     NgbPopoverModule
   ],

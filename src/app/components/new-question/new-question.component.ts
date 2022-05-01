@@ -1,8 +1,8 @@
 import {Component, OnDestroy} from '@angular/core';
-import {QuestionService} from '../../services/question.service';
 import {finalize, takeUntil} from 'rxjs/operators';
 import {NewQuestion} from '../../models/new-question';
 import {Subject} from 'rxjs';
+import {QuestionService} from '@core/services/question.service';
 
 @Component({
   selector: 'pil-new-question',
