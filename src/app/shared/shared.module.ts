@@ -16,6 +16,7 @@ import {SpinnerComponent} from './components/spinner/spinner.component';
     NgbAlertModule
   ],
   exports: [
+    CommonModule,
     AlertCloseableComponent,
     SpinnerComponent,
     MathJaxDirective
