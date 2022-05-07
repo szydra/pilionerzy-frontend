@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 
 import {GameRoutingModule} from './game-routing.module';
-import {SharedModule} from '../shared/shared.module';
+import {SharedModule} from '@shared/shared.module';
 import {MaxHeightDirective} from './directives/max-height.directive';
 import {QuestionComponent} from './components/question/question.component';
 import {PhoneAFriendComponent} from './components/phone-a-friend/phone-a-friend.component';
