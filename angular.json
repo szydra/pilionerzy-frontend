@@ -128,11 +128,11 @@
   "defaultProject": "pilionerzy",
   "schematics": {
     "@schematics/angular:component": {
-      "prefix": "app",
+      "prefix": "pil",
       "style": "scss"
     },
     "@schematics/angular:directive": {
-      "prefix": "app"
+      "prefix": "pil"
     }
   }
 }
