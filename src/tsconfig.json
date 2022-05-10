@@ -16,6 +16,14 @@
       "dom"
     ],
     "module": "es2020",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "paths": {
+      "@core/*": [
+        "./app/core/*"
+      ],
+      "@shared/*": [
+        "./app/shared/*"
+      ]
+    }
   }
 }
