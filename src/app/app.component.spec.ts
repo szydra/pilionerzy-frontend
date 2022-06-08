@@ -1,6 +1,6 @@
 import {TestBed, waitForAsync} from '@angular/core/testing';
 import {AppComponent} from './app.component';
-import {NavBarComponent} from './components/nav-bar/nav-bar.component';
+import {NavBarComponent} from './app-common/components/nav-bar/nav-bar.component';
 import {RouterTestingModule} from '@angular/router/testing';
 
 describe('AppComponent', () => {

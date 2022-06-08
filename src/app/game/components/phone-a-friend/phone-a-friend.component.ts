@@ -1,21 +1,22 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
-import {GameService} from '../../services/game.service';
-import {finalize, map, takeUntil} from 'rxjs/operators';
+import {GameService} from '@core/services/game.service';
+import {finalize, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 
 @Component({
-  selector: 'pil-ask-the-audience',
-  templateUrl: './ask-the-audience.component.html',
-  styleUrls: ['./ask-the-audience.component.scss']
+  selector: 'pil-phone-a-friend',
+  templateUrl: './phone-a-friend.component.html',
+  styleUrls: ['./phone-a-friend.component.scss']
 })
-export class AskTheAudienceComponent implements OnInit, OnDestroy {
+export class PhoneAFriendComponent implements OnInit, OnDestroy {
 
   @Output()
   popupClosed = new EventEmitter();
 
   @Output()
   errorEmitter: EventEmitter<Error> = new EventEmitter();
-  audienceAnswers: Map<string, string>;
+  friendsAnswer: Map<string, string>;
+  isFriendAFemale: boolean;
   waiting: boolean;
 
   private destroy$ = new Subject<void>();
@@ -25,18 +26,19 @@ export class AskTheAudienceComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.waiting = true;
-    this.gameService.getAudienceAnswer()
+    this.isFriendAFemale = Math.random() >= 0.5;
+    this.gameService.getFriendAnswer()
       .pipe(
         takeUntil(this.destroy$),
-        map(chart => chart.votesChart),
         finalize(() => this.waiting = false)
       )
       .subscribe(
-        answers => this.audienceAnswers = answers,
+        answer => this.friendsAnswer = answer,
         error => {
           this.errorEmitter.emit(error);
           this.close();
-        });
+        }
+      );
   }
 
   ngOnDestroy(): void {
@@ -44,15 +46,7 @@ export class AskTheAudienceComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  parseInt = function (num): number {
-    return parseInt(num, 10);
-  };
-
-  close(): void {
+  close() {
     this.popupClosed.emit();
-  }
-
-  get prefixes(): string[] {
-    return Object.keys(this.audienceAnswers);
   }
 }

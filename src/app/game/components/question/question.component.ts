@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges} from '@angular/core';
 import {BehaviorSubject, interval, Subject} from 'rxjs';
 import {finalize, take, takeUntil} from 'rxjs/operators';
-import {Question} from '../../models/question';
+import {Question} from '@core/models/question';
 
 @Component({
   selector: 'pil-question',

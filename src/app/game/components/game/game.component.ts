@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
-import {GameService} from '../../services/game.service';
+import {GameService} from '@core/services/game.service';
 
 import {Game} from '../../models/game';
 import {Lifeline} from '../../models/lifeline';

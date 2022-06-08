@@ -1,5 +1,5 @@
 import {Lifeline} from './lifeline';
-import {Question} from './question';
+import {Question} from '@core/models/question';
 
 export class Game {
   public static readonly HIGHEST_LEVEL: number = 12;
