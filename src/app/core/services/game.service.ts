@@ -5,6 +5,7 @@ import {Question} from '../models/question';
 import * as config from '../../config';
 import {map, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {Level} from '../../game/models/level';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,11 @@ export class GameService {
         map(res => res['correctAnswer']),
         tap(() => localStorage.removeItem('gameId'))
       );
+  }
+
+  getLevels(): Observable<Level[]> {
+    const url = `${config.REST_ENDPOINT}/games/levels`;
+    return this.http.get<Level[]>(url);
   }
 
   getQuestion(): Observable<Question> {
