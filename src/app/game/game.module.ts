@@ -7,6 +7,7 @@ import {QuestionComponent} from './components/question/question.component';
 import {PhoneAFriendComponent} from './components/phone-a-friend/phone-a-friend.component';
 import {GameComponent} from './components/game/game.component';
 import {AskTheAudienceComponent} from './components/ask-the-audience/ask-the-audience.component';
+import {ReversePipe} from './pipes/reverse.pipe';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {AskTheAudienceComponent} from './components/ask-the-audience/ask-the-aud
     GameComponent,
     PhoneAFriendComponent,
     QuestionComponent,
-    MaxHeightDirective
+    MaxHeightDirective,
+    ReversePipe
   ],
   imports: [
     GameRoutingModule,
