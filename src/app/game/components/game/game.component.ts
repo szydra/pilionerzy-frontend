@@ -6,7 +6,8 @@ import {Game} from '../../models/game';
 import {Lifeline} from '../../models/lifeline';
 import {finalize, skipWhile, takeUntil, tap} from 'rxjs/operators';
 import {QuestionComponent} from '../question/question.component';
-import {BehaviorSubject, Subject, zip} from 'rxjs';
+import {BehaviorSubject, Observable, Subject, zip} from 'rxjs';
+import {Level} from '../../models/level';
 
 @Component({
   selector: 'pil-game',
@@ -15,7 +16,7 @@ import {BehaviorSubject, Subject, zip} from 'rxjs';
 })
 export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  levels: number[] = Array.from(new Array(Game.HIGHEST_LEVEL), (x, i) => Game.HIGHEST_LEVEL - i - 1);
+  levels$: Observable<Level[]>;
   lifeline = Lifeline;
   game: Game = new Game();
   phoneAFriendVisible = false;
@@ -29,6 +30,7 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(private gameService: GameService) {
+    this.levels$ = this.gameService.getLevels();
   }
 
   ngOnInit(): void {
@@ -97,6 +99,8 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
     this.startNewGame();
   }
 
+  levelMatcher = lev => lev.id === this.game.level;
+
   checkAnswer(prefix: string): void {
     this.waiting = true;
     this.gameService.sendAnswer(prefix)
@@ -131,10 +135,6 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         error => this.onError(error)
       );
-  }
-
-  isGuaranteed(level: number): boolean {
-    return Game.GUARANTEED_LEVELS.some(lev => lev === level + 1);
   }
 
   fiftyFifty(): void {

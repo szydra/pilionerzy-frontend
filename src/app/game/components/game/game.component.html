@@ -36,7 +36,7 @@
               Niestety nie udało Ci się nic wygrać.
             </span>
             <span *ngIf="game.level > 0">
-              Wygrałeś {{game.awards[game.level - 1]}}. Gratulacje!
+              Wygrałeś {{(levels$ | async)?.find(levelMatcher).award}}. Gratulacje!
             </span>
           </div>
           <div *ngIf="showError" class="end-info mt-3">
@@ -62,15 +62,16 @@
     <div class="absolute-right-container text-white">
       <div>
         <div class="level-box"
-             id="level-box{{lev}}"
-             *ngFor="let lev of levels"
+             id="level-box{{lev.id}}"
+             *ngFor="let lev of levels$ | async | reverse:1"
              [ngClass]="{
-                'bg-warning': lev === game.level && game.active,
-                'bg-success': lev < game.level,
-                'top-rounded': !game.active ? lev === game.level - 1 : lev === game.level
+                'd-none': lev.id === 0,
+                'bg-warning': lev.id === game.level + 1 && game.active,
+                'bg-success': lev.id <= game.level,
+                'top-rounded': !game.active ? lev.id === game.level : lev.id === game.level + 1
              }"
-             [ngStyle]="{'font-weight': isGuaranteed(lev) ? 'bold' : 'normal'}">
-          {{game.awards[lev]}}
+             [ngStyle]="{'font-weight': lev.guaranteed ? 'bold' : 'normal'}">
+          {{lev.award}}
         </div>
       </div>
       <div class="row">
