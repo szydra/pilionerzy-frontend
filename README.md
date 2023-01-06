@@ -1,7 +1,7 @@
 # Pilionerzy
 
 This project is a (mainly) mathematical version of the famous game show
-*Who Wants to Be a Millionaire?* It is an Angular 11 based application.
+*Who Wants to Be a Millionaire?* It is an Angular 12 based application.
 
 ## Development
 
