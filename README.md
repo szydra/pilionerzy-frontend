@@ -10,7 +10,7 @@ The app will automatically reload if you change any of the source files.
 
 ## Build
 
-Run `ng build` to build the project or `ng build --prod` for a production build.
+Run `ng build` to build the project with the production configuration.
 The build artifacts will be stored in the `dist/` directory.
 A docker image can be build as well; just run, e.g.,
 ```bash
