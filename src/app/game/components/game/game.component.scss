@@ -9,9 +9,10 @@
 }
 
 .left-container {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
   height: 100%;
-  width: 100%;
 }
 
 .level-box {

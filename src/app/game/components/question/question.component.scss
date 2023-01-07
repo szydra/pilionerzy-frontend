@@ -7,12 +7,6 @@ span.answer, span.question {
   display: inline-block;
 }
 
-.absolute-full-question-container {
-  bottom: 0;
-  position: static;
-  width: 100%;
-}
-
 .answer-container {
   position: relative;
   width: 100%;
@@ -102,10 +96,4 @@ span.answer, span.question {
   line-height: 10px;
   display: inline-block;
   margin: 0 3px 5px;
-}
-
-@media (min-width: 992px) {
-  .absolute-full-question-container {
-    position: absolute;
-  }
 }
