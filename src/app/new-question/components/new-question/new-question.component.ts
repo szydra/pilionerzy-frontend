@@ -33,17 +33,17 @@ export class NewQuestionComponent implements OnDestroy {
         takeUntil(this.destroy$),
         finalize(() => this.waiting = false)
       )
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.showSuccess = true;
           this.question = new NewQuestion();
-          setTimeout(() => this.showSuccess = false, 10000);
+          setTimeout(() => this.showSuccess = false, 10_000);
         },
-        error => {
+        error: error => {
           this.showError = true;
           console.error('An unknown error occurred', error);
         }
-      );
+      });
   }
 
   isButtonSubmitDisabled(): boolean {

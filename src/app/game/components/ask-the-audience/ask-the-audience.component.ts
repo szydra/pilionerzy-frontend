@@ -31,12 +31,13 @@ export class AskTheAudienceComponent implements OnInit, OnDestroy {
         map(chart => chart.votesChart),
         finalize(() => this.waiting = false)
       )
-      .subscribe(
-        answers => this.audienceAnswers = answers,
-        error => {
+      .subscribe({
+        next: answers => this.audienceAnswers = answers,
+        error: error => {
           this.errorEmitter.emit(error);
           this.close();
-        });
+        }
+      });
   }
 
   ngOnDestroy(): void {
