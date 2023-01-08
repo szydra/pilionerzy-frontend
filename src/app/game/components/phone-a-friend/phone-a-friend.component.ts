@@ -32,13 +32,13 @@ export class PhoneAFriendComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
         finalize(() => this.waiting = false)
       )
-      .subscribe(
-        answer => this.friendsAnswer = answer,
-        error => {
+      .subscribe({
+        next: answer => this.friendsAnswer = answer,
+        error: error => {
           this.errorEmitter.emit(error);
           this.close();
         }
-      );
+      });
   }
 
   ngOnDestroy(): void {

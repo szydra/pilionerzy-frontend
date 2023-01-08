@@ -56,10 +56,10 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
   private startNewGame(): void {
     this.gameService.startNewGame()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        () => this.getFirstQuestion(),
-        error => this.onError(error)
-      );
+      .subscribe({
+        next: () => this.getFirstQuestion(),
+        error: error => this.onError(error)
+      });
   }
 
   private getFirstQuestion(): void {
@@ -69,10 +69,10 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
         takeUntil(this.destroy$),
         finalize(() => this.waiting = false)
       )
-      .subscribe(
-        question => this.game.lastQuestion = question,
-        error => this.onError(error)
-      );
+      .subscribe({
+        next: question => this.game.lastQuestion = question,
+        error: error => this.onError(error)
+      });
   }
 
   private getNextQuestion(): void {
@@ -81,10 +81,10 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
         takeUntil(this.destroy$),
         tap(() => this.game.correctAnswer = null)
       )
-      .subscribe(
-        question => this.game.lastQuestion = question,
-        error => this.onError(error)
-      );
+      .subscribe({
+        next: question => this.game.lastQuestion = question,
+        error: error => this.onError(error)
+      });
   }
 
   onError(error: Error): void {
@@ -108,8 +108,8 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
         takeUntil(this.destroy$),
         finalize(() => this.waiting = false)
       )
-      .subscribe(
-        game => {
+      .subscribe({
+        next: game => {
           this.game.correctAnswer = game.correctAnswer;
           this.game.level = game.level;
           this.game.active = game.active;
@@ -117,8 +117,8 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
             this.continueGame$.next(true);
           }
         },
-        error => this.onError(error)
-      );
+        error: error => this.onError(error)
+      });
   }
 
   onResign(): void {
@@ -128,13 +128,13 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
         takeUntil(this.destroy$),
         finalize(() => this.waiting = false)
       )
-      .subscribe(
-        correctAnswer => {
+      .subscribe({
+        next: correctAnswer => {
           this.game.active = false;
           this.game.correctAnswer = correctAnswer;
         },
-        error => this.onError(error)
-      );
+        error: error => this.onError(error)
+      });
   }
 
   fiftyFifty(): void {
@@ -144,16 +144,16 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
         takeUntil(this.destroy$),
         finalize(() => this.waiting = false)
       )
-      .subscribe(
-        incorrectPrefixes => {
+      .subscribe({
+        next: incorrectPrefixes => {
           this.game.lastQuestion.answers.forEach((answer, index, answers) => {
             if (incorrectPrefixes.includes(answer.prefix)) {
               answers[index] = null;
             }
           });
         },
-        error => this.onError(error)
-      );
+        error: error => this.onError(error)
+      });
     this.game.usedLifelines.push(Lifeline.FiftyFifty);
   }
 
