@@ -2,26 +2,26 @@
   <!-- <div class="col-lg-9 col-md-8">Timer</div> -->
   <div class="col-lg-3 offset-lg-9 col-md-4 offset-md-8">
     <div class="row mb-lg-1">
-      <div class="col text-right">
+      <div class="col text-center">
         <img *ngIf="!game.usedLifelines.includes(lifeline.FiftyFifty)"
              src="/assets/images/5050.png" [ngClass]="{'lifeline': true, 'lifeline-active': game.active}"
              (click)="game.active && fiftyFifty()" alt="Pół na pół"/>
         <img *ngIf="game.usedLifelines.includes(lifeline.FiftyFifty)"
-             src="/assets/images/5050used.png" class="lifeline" alt="Pół na pół"/>
+             src="/assets/images/5050used.png" class="lifeline lifeline-used" alt="Pół na pół"/>
       </div>
       <div class="col text-center">
         <img *ngIf="!game.usedLifelines.includes(lifeline.PhoneAFriend)"
              src="/assets/images/PAF.png" [ngClass]="{'lifeline': true, 'lifeline-active': game.active}"
              (click)="game.active && phoneAFriend()" alt="Telefon do przyjaciela"/>
         <img *ngIf="game.usedLifelines.includes(lifeline.PhoneAFriend)"
-             src="/assets/images/PAFused.png" class="lifeline" alt="Telefon do przyjaciela"/>
+             src="/assets/images/PAFused.png" class="lifeline lifeline-used" alt="Telefon do przyjaciela"/>
       </div>
-      <div class="col text-left">
+      <div class="col text-center">
         <img *ngIf="!game.usedLifelines.includes(lifeline.AskTheAudience)"
              src="/assets/images/ATA.png" [ngClass]="{'lifeline': true, 'lifeline-active': game.active}"
              (click)="game.active && askTheAudience()" alt="Pytanie do publiczności"/>
         <img *ngIf="game.usedLifelines.includes(lifeline.AskTheAudience)"
-             src="/assets/images/ATAused.png" class="lifeline" alt="Pytanie do publiczności"/>
+             src="/assets/images/ATAused.png" class="lifeline lifeline-used" alt="Pytanie do publiczności"/>
       </div>
     </div>
   </div>
