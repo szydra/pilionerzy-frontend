@@ -16,6 +16,7 @@ span.answer, span.question {
   padding: 0;
   border-radius: 44px;
   z-index: 1;
+  transition: filter 0.15s;
 }
 
 .answer-content {
@@ -39,26 +40,30 @@ span.answer, span.question {
 
 .bg-unselected {
   @include grad-background($background-unselected-color, $answer-corner-size);
-}
 
-.bg-unselected:not(.disable-hover):hover {
-  @include grad-background($background-unselected-hovered-color, $answer-corner-size);
-  cursor: pointer;
+  &:not(.disable-hover) {
+    &:hover {
+      filter: brightness(0.8);
+      cursor: pointer;
+    }
+  }
 }
 
 .bg-selected {
   @include grad-background($background-selected-color, $answer-corner-size);
-}
 
-.bg-selected:not(.disable-hover):hover {
-  @include grad-background($background-selected-hovered-color, $answer-corner-size);
-  cursor: pointer;
+  &:not(.disable-hover) {
+    &:hover {
+      filter: brightness(0.8);
+      cursor: pointer;
+    }
+  }
 }
 
 .prefix {
   font-size: 40px;
   font-weight: bold;
-  color: #FFEB3B;
+  color: $question-prefix-color;
   position: absolute;
   margin: auto 0 auto 10px;
   top: 0;

@@ -34,6 +34,7 @@
 .lifeline {
   width: 80%;
   max-width: 100px;
+  transition: filter 0.15s;
 
   &.lifeline-active {
     &:hover {

@@ -1,8 +1,7 @@
-$background-correct-color: #28a745;
-$background-unselected-color: #00005b;
-$background-unselected-hovered-color: #00006b;
-$background-selected-color: #ffc107;
-$background-selected-hovered-color: #ffb107;
+$background-correct-color: var(--bs-green);
+$background-unselected-color: #4400C1;
+$background-selected-color: var(--bs-yellow);
+$question-prefix-color: #FFEB5B;
 
 $question-corner-size: 24px;
 $answer-corner-size: 22px;
