@@ -1,14 +1,10 @@
-.btn-popover {
-  margin-bottom: 3px;
-}
-
 .popover-content {
-  background: #00005b;
+  background: var(--bs-blue);
   font-size: 100%;
-}
 
-.popover-content .arrow::after {
-  border-left-color: #00005b;
+  > .popover-arrow::after {
+    border-left-color: var(--bs-blue);
+  }
 }
 
 .popover-icon {
