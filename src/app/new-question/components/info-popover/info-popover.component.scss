@@ -1,18 +1,22 @@
-.popover-content {
-  background: var(--bs-blue);
-  font-size: 100%;
+:host {
+  ::ng-deep {
+    .popover-content {
+      background: var(--bs-blue);
+      font-size: 100%;
 
-  > .popover-arrow::after {
-    border-left-color: var(--bs-blue);
-  }
-}
+      > .popover-arrow::after {
+        border-left-color: var(--bs-blue);
+      }
+    }
 
-.popover-icon {
-  font-size: 24px;
-}
+    .popover-icon {
+      font-size: 24px;
+    }
 
-@media (max-width: 359px) {
-  .popover-content {
-    width: 220px;
+    @media (max-width: 359px) {
+      .popover-content {
+        width: 220px;
+      }
+    }
   }
 }
