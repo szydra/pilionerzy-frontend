@@ -1,5 +1,7 @@
+@import '../../../../variables';
+
 #bg-paf {
-  background-color: rgba(192, 192, 192, 0.5);
+  background-color: $background-lifeline-color;
   position: fixed;
   z-index: 2048;
   width: 100vw;
