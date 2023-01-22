@@ -2,9 +2,9 @@
   <div id="ata" class="bg-secondary font-large text-center zero-positioned">
     <div class="row mx-1 mx-sm-4">
       <div *ngFor="let prefix of prefixes" class="col px-0">
-        <div class="bg-dark progress progress-bar-vertical">
-          <div class="progress-bar progress-bar-striped overflow-visible" role="progressbar"
-               aria-valuemin="0" aria-valuemax="100"
+        <div class="bg-dark align-items-end progress progress-bar-vertical">
+          <div class="progress-bar progress-bar-striped overflow-visible justify-content-end"
+               role="progressbar" aria-valuemin="0" aria-valuemax="100"
                [attr.aria-valuenow]="parseInt(audienceAnswers[prefix])"
                [style.height]="audienceAnswers[prefix]">
             <span class="font-large">
