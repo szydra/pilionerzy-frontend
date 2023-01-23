@@ -10,8 +10,12 @@
                            message="Pytanie zapisano poprawnie i oczekuje na aktywację.">
       </pil-alert-closeable>
       <div class="form-group">
-        <span class="text-white float-left mt-4">Treść pytania:</span>
-        <pil-info-popover></pil-info-popover>
+        <div class="d-flex">
+          <span class="align-self-end text-white">Treść pytania:</span>
+          <div class="d-flex justify-content-end flex-grow-1">
+            <pil-info-popover></pil-info-popover>
+          </div>
+        </div>
         <pil-textarea-preview [(inputValue)]="question.content"></pil-textarea-preview>
       </div>
     </div>
@@ -24,7 +28,7 @@
             <input id="answer{{answer.prefix}}" type="radio"
                    name="correctAnswer" value="{{answer.prefix}}"
                    [(ngModel)]="question.correctAnswer"/>
-            <label for="answer{{answer.prefix}}" class="ml-2">
+            <label for="answer{{answer.prefix}}" class="ms-2">
               Odpowiedź {{answer.prefix}}:
             </label>
             <pil-textarea-preview [(inputValue)]="answer.content"

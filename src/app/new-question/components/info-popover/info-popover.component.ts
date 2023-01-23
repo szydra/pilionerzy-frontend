@@ -1,9 +1,8 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'pil-info-popover',
   templateUrl: './info-popover.component.html',
-  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./info-popover.component.scss']
 })
 export class InfoPopoverComponent {

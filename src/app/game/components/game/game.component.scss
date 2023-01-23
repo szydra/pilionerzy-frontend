@@ -1,24 +1,16 @@
-.absolute-right-container {
-  bottom: 0;
-  position: static;
-  width: 100%;
-}
-
 .end-info {
   font-size: 20px;
-}
-
-.left-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100%;
 }
 
 .level-box {
   font-size: 16px;
   padding: 8px;
   text-align: center;
+
+  &:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
 }
 
 .top-rounded {
@@ -26,23 +18,19 @@
   border-top-right-radius: 10px;
 }
 
-.level-box:last-child {
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-
-.lifeline-active:hover {
-  cursor: pointer;
-  opacity: 0.6;
-}
-
 .lifeline {
   width: 80%;
-  max-width: 100px;
-}
+  max-width: 90px;
+  transition: filter 0.15s;
 
-@media (min-width: 768px) and (max-width: 991px) {
-  .absolute-right-container {
-    position: absolute;
+  &.lifeline-active {
+    &:hover {
+      cursor: pointer;
+      filter: brightness(0.7);
+    }
+  }
+
+  &.lifeline-used {
+    filter: brightness(0.7);
   }
 }
