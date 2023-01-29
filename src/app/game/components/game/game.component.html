@@ -28,7 +28,11 @@
 </div>
 <div class="row">
   <div class="col-lg-9 col-md-8">
-    <div class="d-flex flex-column justify-content-end h-100">
+    <div class="d-flex flex-column-reverse justify-content-between h-100">
+      <pil-question [question]="game.lastQuestion" [active]="game.active"
+                    [correctAnswer]="game.correctAnswer"
+                    (answerSelected)="checkAnswer($event)">
+      </pil-question>
       <div *ngIf="!game.active" class="row">
         <div class="col-sm-12 text-center">
           <div *ngIf="!showError" class="end-info mt-3 text-white">
@@ -52,10 +56,6 @@
           </div>
         </div>
       </div>
-      <pil-question [question]="game.lastQuestion" [active]="game.active"
-                    [correctAnswer]="game.correctAnswer"
-                    (answerSelected)="checkAnswer($event)">
-      </pil-question>
     </div>
   </div>
   <div class="col-lg-3 col-md-4 d-flex text-white">
